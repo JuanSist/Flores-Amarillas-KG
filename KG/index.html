@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Flores Amarillas 💐</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="description" content="Una sorpresa con flores amarillas 💛">
+<meta property="og:title" content="Te Regalo Estas Flores Amarillas 💐">
+<meta property="og:description" content="Toca para ver tu sorpresa 🌼">
+<meta property="og:type" content="website">
+<meta property="og:image" content="preview.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  html,body{
+    margin:0;
+    height:100%;
+    height:100dvh; /* corrige el bug de "100vh" en navegadores móviles (WhatsApp, Safari, Chrome) */
+    height: var(--alto-real, 100dvh); /* respaldo extra para navegadores antiguos (ej. Samsung Internet viejo) */
+    background: radial-gradient(ellipse at 50% 0%, #2c2c44 0%, #16161f 70%);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family: 'Georgia', 'Segoe UI', serif;
+    overflow:hidden;
+  }
+  #fondo{
+    position:absolute;
+    top:0; left:0;
+    width:100%; height:100%;
+    z-index:0;
+    overflow:hidden;
+    transition: transform 0.35s ease-out;
+  }
+  .contenedor{
+    position:relative;
+    z-index:2;
+    text-align:center;
+    padding: 0 24px;
+  }
+  .luna-fondo{
+    position:absolute;
+    top:7%; left:10%;
+    width:64px; height:64px;
+    border-radius:50%;
+    background: radial-gradient(circle at 35% 35%, #fffef2, #f3edc9 60%, #e5dca0 100%);
+    box-shadow: 0 0 36px 10px rgba(255,250,230,0.3);
+    animation: derivaLuna 75s ease-in-out infinite;
+  }
+  @keyframes derivaLuna{
+    0%,100%{ transform: translateX(-22px); }
+    50%{ transform: translateX(22px); }
+  }
+  .estrella-fondo{
+    position:absolute;
+    width:2px; height:2px;
+    background:#fff;
+    border-radius:50%;
+    animation: titilarEstrella 3s ease-in-out infinite;
+  }
+  @keyframes titilarEstrella{
+    0%,100%{ opacity:0.2; }
+    50%{ opacity:1; }
+  }
+  .estrella-fugaz-fondo{
+    position:absolute;
+    top:50%; left:50%;
+    width:3px; height:3px;
+    background: radial-gradient(circle, #ffffff 0%, #fff6d8 45%, transparent 75%);
+    border-radius:50%;
+    box-shadow:
+      0 0 6px 2px rgba(255,255,255,0.95),
+      0 0 16px 6px rgba(255,241,181,0.55),
+      0 0 28px 10px rgba(255,225,140,0.25);
+  }
+  .estrella-fugaz-fondo::before{
+    /* estela larga y afilada, apuntando hacia atrás en el ángulo de vuelo */
+    content:'';
+    position:absolute;
+    top:50%; right:50%;
+    width:130px; height:2px;
+    background: linear-gradient(90deg,
+      transparent,
+      rgba(255,241,181,0.35) 35%,
+      rgba(255,250,225,0.75) 75%,
+      rgba(255,255,255,0.95) 100%);
+    border-radius:2px;
+    transform-origin: right center;
+    transform: translateY(-50%) rotate(var(--angulo-estrella, 24deg));
+    filter: blur(0.4px);
+  }
+  .estrella-fugaz-fondo::after{
+    /* segunda estela, más fina y corta, para dar sensación de brillo doble */
+    content:'';
+    position:absolute;
+    top:50%; right:50%;
+    width:60px; height:0.8px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.9));
+    transform-origin: right center;
+    transform: translateY(-50%) rotate(var(--angulo-estrella, 24deg)) translateY(-1.5px);
+  }
+  .zona-estrella-fugaz{
+    position:absolute;
+    width:100px; height:100px;
+    cursor:pointer;
+    transition: transform 0.15s ease;
+  }
+  .zona-estrella-fugaz:active{
+    transform: scale(1.3);
+  }
+  @keyframes cruzarCieloFondo{
+    0%{ opacity:0; transform: translate(0,0) scale(0.7); pointer-events:none; }
+    8%{ opacity:1; transform: translate(20px, 11px) scale(1); }
+    12%{ pointer-events:auto; }
+    78%{ opacity:1; pointer-events:auto; }
+    94%{ opacity:0; transform: translate(300px, 165px) scale(0.8); pointer-events:none; }
+    100%{ opacity:0; }
+  }
+  .mensaje-deseo{
+    position:fixed;
+    transform: translate(-50%, -10px) scale(0.8);
+    background: rgba(0,0,0,0.68);
+    border:1px solid #ffe14d;
+    border-radius:14px;
+    padding:8px 16px;
+    color:#ffe14d;
+    font-size:0.95rem;
+    font-weight:bold;
+    white-space:nowrap;
+    pointer-events:none;
+    opacity:0;
+    z-index:15;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  .mensaje-deseo.visible{
+    opacity:1;
+    transform: translate(-50%, -32px) scale(1);
+  }
+  .chispa-deseo{
+    position:fixed;
+    width:4px; height:4px;
+    background: radial-gradient(circle, #fff6d8, #ffe14d 70%, transparent);
+    border-radius:50%;
+    box-shadow: 0 0 6px 2px rgba(255,225,77,0.9);
+    pointer-events:none;
+    z-index:16;
+    opacity:0;
+    animation: dispararChispaDeseo 1s ease-out forwards;
+  }
+  @keyframes dispararChispaDeseo{
+    0%{ opacity:0; transform: translate(-50%,-50%) translate(0,0) scale(0.6); }
+    15%{ opacity:1; }
+    100%{ opacity:0; transform: translate(-50%,-50%) translate(var(--dx), var(--dy)) scale(0.3); }
+  }
+  .corazon-destello{
+    position:absolute;
+    font-size:16px;
+    opacity:0;
+    animation: destellarCorazon 3.5s ease-in-out forwards;
+  }
+  @keyframes destellarCorazon{
+    0%{ opacity:0; transform: scale(0.5); }
+    20%{ opacity:1; transform: scale(1.1); }
+    35%{ opacity:0.8; transform: scale(1); }
+    100%{ opacity:0; transform: scale(0.8) translateY(-20px); }
+  }
+  body{
+    opacity:1;
+    transition: opacity 0.6s ease;
+  }
+  body.saliendo{
+    opacity:0;
+  }
+  #destello{
+    position:fixed;
+    top:0; left:0;
+    width:100%; height:100%;
+    background: radial-gradient(circle, #fff6d8 0%, #ffe14d 60%, transparent 100%);
+    opacity:0;
+    pointer-events:none;
+    z-index:5;
+    transition: opacity 0.5s ease;
+  }
+  #destello.activo{
+    opacity:0.9;
+  }
+  .para-quien{
+    color:#ffb6c1;
+    font-size:0.95rem;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    margin:0 0 6px;
+    text-shadow: 0 0 8px rgba(255,182,193,0.6);
+  }
+  h1{
+    position:relative;
+    font-family: 'Dancing Script', 'Brush Script MT', 'Segoe Script', cursive;
+    font-weight:700;
+    color:#ffe14d;
+    font-size: clamp(1.6rem, 4.5vw, 2.8rem);
+    line-height:1.4;
+    margin:0 0 40px;
+    text-shadow:
+      0 0 12px rgba(255,225,77,0.5),
+      0 2px 3px rgba(0,0,0,0.85),
+      0 0 24px rgba(0,0,0,0.6);
+  }
+  h1 .letra{
+    display:inline-block;
+    opacity:0;
+    animation: apareceLetra 0.4s ease forwards;
+  }
+  @keyframes apareceLetra{
+    from{ opacity:0; transform: translateY(6px); }
+    to{ opacity:1; transform: translateY(0); }
+  }
+  h1 .brillo-titulo{
+    position:absolute;
+    top:0; left:-60%;
+    width:60%; height:100%;
+    background: linear-gradient(100deg, transparent, rgba(255,255,255,0.7), transparent);
+    pointer-events:none;
+  }
+  @keyframes recorrerBrilloTitulo{
+    from{ left:-60%; }
+    to{ left:160%; }
+  }
+  .boton{
+    display:inline-block;
+    background:transparent;
+    border:2px solid #ffe14d;
+    color:#ffe14d;
+    padding: 14px 40px;
+    font-size:1.1rem;
+    letter-spacing:1px;
+    text-decoration:none;
+    border-radius:6px;
+    cursor:pointer;
+    transition: all 0.3s ease;
+    animation: pulsoBoton 2.2s ease-in-out infinite;
+  }
+  @keyframes pulsoBoton{
+    0%,100%{ box-shadow: 0 0 6px 0 rgba(255,225,77,0.4); }
+    50%{ box-shadow: 0 0 18px 6px rgba(255,225,77,0.55); }
+  }
+  @keyframes pulsoBotonFuerte{
+    0%,100%{ box-shadow: 0 0 8px 0 rgba(255,225,77,0.5); transform: scale(1); }
+    50%{ box-shadow: 0 0 30px 10px rgba(255,225,77,0.8); transform: scale(1.045); }
+  }
+  .boton.invitando{
+    animation: pulsoBotonFuerte 1.5s ease-in-out infinite;
+  }
+  .boton:hover{
+    background:#ffe14d;
+    color:#3a3a3a;
+    box-shadow: 0 0 20px rgba(255,225,77,0.7);
+    animation:none;
+  }
+  .texto-invitacion{
+    margin-top:12px;
+    color:#e8dfc0;
+    font-size:0.85rem;
+    font-style:italic;
+    opacity:0.85;
+  }
+  .fila-corazones{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap: clamp(16px, 6vw, 60px);
+    margin-bottom:36px;
+  }
+  .zona-corazones{
+    position:relative;
+    width: clamp(110px, 26vw, 170px);
+    height: clamp(95px, 22vw, 145px);
+    cursor:pointer;
+    transition: transform 0.3s ease;
+  }
+  .zona-corazones:hover, .zona-corazones.activado{
+    transform: scale(1.08);
+  }
+  .zona-corazones:hover #corazonPunteado path, .zona-corazones.activado #corazonPunteado path{
+    stroke: #ff8fab;
+    filter: drop-shadow(0 0 6px rgba(255,143,171,0.8));
+  }
+  .zona-corazones:hover .chispa-corazon, .zona-corazones.activado .chispa-corazon{
+    background:#ffd27a;
+    box-shadow: 0 0 9px 3px rgba(255,210,122,1);
+  }
+  .zona-corazones svg, .zona-corazones .capa-estrellas{
+    position:absolute;
+    top:0; left:0;
+    width:100%; height:100%;
+  }
+  .zona-corazones.bloqueado{
+    opacity:0.3;
+    filter: grayscale(70%);
+    pointer-events:none;
+    transition: opacity 0.8s ease, filter 0.8s ease, transform 0.6s ease;
+  }
+  .zona-corazones.desbloqueando{
+    animation: destelloDesbloqueo 0.8s ease;
+  }
+  @keyframes destelloDesbloqueo{
+    0%{ transform: scale(1); }
+    40%{ transform: scale(1.25); filter: brightness(1.6); }
+    100%{ transform: scale(1); }
+  }
+  .chispa-corazon{
+    position:absolute;
+    border-radius:50%;
+    background:#ffb84d;
+    box-shadow: 0 0 5px 1.5px rgba(255,184,77,0.9);
+    animation: titilarChispa 2.2s ease-in-out infinite, flotarChispa 4s ease-in-out infinite;
+  }
+  @keyframes titilarChispa{
+    0%,100%{ opacity:0.25; }
+    50%{ opacity:1; }
+  }
+  @keyframes flotarChispa{
+    0%,100%{ transform: translate(0,0) scale(0.85); }
+    50%{ transform: translate(0,-4px) scale(1.15); }
+  }
+  @media (max-width: 420px){
+    .fila-corazones{
+      gap: 8px;
+    }
+    .zona-corazones{
+      width: 95px;
+      height: 82px;
+    }
+    h1{
+      margin:0 0 24px;
+    }
+    .boton{
+      padding: 12px 30px;
+      font-size:1rem;
+    }
+  }
+  #pantallaCarga{
+    position:fixed;
+    top:0; left:0;
+    width:100%; height:100%;
+    background: radial-gradient(ellipse at 50% 0%, #2c2c44 0%, #16161f 70%);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:16px;
+    z-index:100;
+    transition: opacity 0.8s ease;
+  }
+  #pantallaCarga.oculta{
+    opacity:0;
+    pointer-events:none;
+  }
+  .spinner-carga{
+    width:46px; height:46px;
+    border-radius:50%;
+    border: 3px solid rgba(255,225,77,0.25);
+    border-top-color: #ffe14d;
+    animation: girarSpinner 1s linear infinite;
+  }
+  @keyframes girarSpinner{
+    to{ transform: rotate(360deg); }
+  }
+  #pantallaCarga p{
+    color:#ffe14d;
+    font-family: 'Georgia', serif;
+    font-size:0.95rem;
+    letter-spacing:0.5px;
+  }
+</style>
+</head>
+<body>
+  <div id="pantallaCarga">
+    <div class="spinner-carga"></div>
+    <p>Preparando Tu Sorpresa 🌼💕...</p>
+  </div>
+  <div id="fondo"></div>
+  <div id="destello"></div>
+  <audio id="cancionFondo" src="Flores Amarillas.mp3" loop></audio>
+  <div class="contenedor">
+    <div class="fila-corazones">
+      <div class="zona-corazones" id="zonaCorazon1">
+        <svg id="corazonPunteado" viewBox="0 0 24 24">
+          <path d="M12,21.35 C12,21.35 3,14.2 3,8.5 C3,5.42 5.42,3 8.5,3
+                   C10.24,3 11.91,3.81 13,5.09 C14.09,3.81 15.76,3 17.5,3
+                   C20.58,3 23,5.42 23,8.5 C23,14.2 12,21.35 12,21.35 Z"
+                fill="none" stroke="#ffb6c1" stroke-width="0.9"
+                stroke-linecap="round" pathLength="100" stroke-dasharray="2.2 2.6"/>
+        </svg>
+      </div>
+      <div class="zona-corazones bloqueado" id="zonaCorazon2">
+        <svg viewBox="0 0 24 24">
+          <path d="M12,21.35 C12,21.35 3,14.2 3,8.5 C3,5.42 5.42,3 8.5,3
+                   C10.24,3 11.91,3.81 13,5.09 C14.09,3.81 15.76,3 17.5,3
+                   C20.58,3 23,5.42 23,8.5 C23,14.2 12,21.35 12,21.35 Z"
+                fill="none" stroke="#ffd27a" stroke-width="0.9" opacity="0.3"/>
+        </svg>
+        <div class="capa-estrellas" id="capaEstrellas"></div>
+      </div>
+    </div>
+    <p class="para-quien">Para: Karime 🌼</p>
+    <h1 id="titulo">Te Regalo Estas Flores Amarillas Virtuales<br>Para Que Sepas Lo Mucho Que Me Gustas 💐💛</h1>
+    <a class="boton" id="botonEntrar" href="principal.html">Ábreme, Karime 💛</a>
+    <p class="texto-invitacion">Toca Para Ver Tu Sorpresa 🌼</p>
+    <p class="texto-invitacion">Presiona El Corazon 🩷</p>
+  </div>
+
+  <script>
+    // Respaldo para navegadores viejos que no soportan 100dvh (algunos Samsung
+    // Internet desactualizados): calculamos el alto real de la pantalla en px.
+    function fijarAltoReal(){
+      document.documentElement.style.setProperty('--alto-real', window.innerHeight + 'px');
+    }
+    fijarAltoReal();
+    window.addEventListener('resize', fijarAltoReal);
+    window.addEventListener('orientationchange', fijarAltoReal);
+
+    // Contador de visitas (servicio gratuito externo, no requiere cuenta ni servidor propio).
+    // Para consultarlo, visita en tu navegador:
+    // https://countapi.mileshilliard.com/api/v1/get/flores-karime-jm-2026-portada
+    fetch('https://countapi.mileshilliard.com/api/v1/hit/flores-karime-jm-2026-portada').catch(() => {});
+
+    // Divide el título en letras individuales para animarlas una por una,
+    // respetando los emojis como una sola unidad (para que no se rompan).
+    const titulo = document.getElementById('titulo');
+    const html = titulo.innerHTML;
+    let retardo = 0;
+    const segmentador = (typeof Intl !== 'undefined' && Intl.Segmenter)
+      ? new Intl.Segmenter('es', { granularity: 'grapheme' })
+      : null;
+
+    function dividirEnUnidades(texto){
+      if (segmentador) {
+        return [...segmentador.segment(texto)].map(s => s.segment);
+      }
+      return Array.from(texto); // respeta al menos emojis de un solo par (la mayoría)
+    }
+
+    titulo.innerHTML = html.split(/(<br>)/).map(parte => {
+      if (parte === '<br>') return '<br>';
+      return dividirEnUnidades(parte).map(letra => {
+        const span = `<span class="letra" style="animation-delay:${retardo}s">${letra === ' ' ? '&nbsp;' : letra}</span>`;
+        retardo += 0.02;
+        return span;
+      }).join('');
+    }).join('');
+
+    // Una vez que termina de aparecer la última letra, se agrega un brillo que lo recorre
+    const brilloTitulo = document.createElement('span');
+    brilloTitulo.className = 'brillo-titulo';
+    titulo.appendChild(brilloTitulo);
+    setTimeout(() => {
+      brilloTitulo.style.animation = 'recorrerBrilloTitulo 1.4s ease-in-out';
+    }, retardo * 1000 + 300);
+
+    const boton = document.getElementById('botonEntrar');
+    const cancionFondo = document.getElementById('cancionFondo');
+
+    // Si ya había abierto esta página antes (en este mismo navegador/celular),
+    // se le cambia el texto de invitación y una parte del título.
+    const yaLaVioAntes = localStorage.getItem('floresYaVista');
+    const textoInvitacion = document.querySelector('.texto-invitacion');
+    const paraQuien = document.querySelector('.para-quien');
+    if (yaLaVioAntes) {
+      textoInvitacion.textContent = 'Vuelve A Tocar, Esto Es Tuyo 💛';
+      paraQuien.textContent = 'Otra Vez Por Aquí... Me Encanta 💛';
+    } else {
+      localStorage.setItem('floresYaVista', 'true');
+    }
+
+    // --- Audio compartido: un solo AudioContext para todos los efectos ---
+    // (crear uno nuevo por cada sonido puede agotar el límite que algunos
+    // navegadores, sobre todo Safari/iOS, imponen sobre contextos activos)
+    let contextoAudioCompartido = null;
+    function obtenerContextoAudio(){
+      if (!contextoAudioCompartido) {
+        contextoAudioCompartido = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      if (contextoAudioCompartido.state === 'suspended') {
+        contextoAudioCompartido.resume().catch(() => {});
+      }
+      return contextoAudioCompartido;
+    }
+    function reproducirTono(frecuencia, duracion, volumenPico){
+      try {
+        const ctx = obtenerContextoAudio();
+        const osc = ctx.createOscillator();
+        const ganancia = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(frecuencia, ctx.currentTime);
+        ganancia.gain.setValueAtTime(volumenPico, ctx.currentTime);
+        ganancia.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duracion);
+        osc.connect(ganancia).connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + duracion);
+      } catch (err) { /* si el navegador lo bloquea, no pasa nada */ }
+    }
+
+    // Los navegadores solo permiten autoplay con sonido si el audio
+    // arranca "muteado". Por eso arranca así, y en cuanto la persona
+    // toque la pantalla por primera vez, se le quita el mute con fade-in.
+    cancionFondo.muted = true;
+    cancionFondo.volume = 0.35;
+    cancionFondo.play().catch(() => {});
+
+    function activarSonido(){
+      if (!cancionFondo.muted) return; // ya está activo, no repetir
+      cancionFondo.muted = false;
+      cancionFondo.volume = 0;
+      let vol = 0;
+      const paso = setInterval(() => {
+        vol += 0.02;
+        if (vol >= 0.35) { vol = 0.35; clearInterval(paso); }
+        cancionFondo.volume = vol;
+      }, 150);
+
+      // Pequeño "ding" para avisar que el sonido ya está activo
+      reproducirTono(1318, 0.4, 0.1);
+    }
+    // Cualquier primer toque/clic en la página activa el sonido
+    document.addEventListener('pointerdown', activarSonido, { once: true });
+
+    // Si pasan varios segundos sin que toque el botón, le damos un latido
+    // más notorio para invitarla suavemente a entrar
+    const temporizadorInvitacion = setTimeout(() => {
+      boton.classList.add('invitando');
+      if (navigator.vibrate) { try { navigator.vibrate(15); } catch (err) {} }
+    }, 7000);
+
+    // Transición de fundido (con destello dorado) antes de pasar a la siguiente pantalla
+    boton.addEventListener('click', (evento) => {
+      evento.preventDefault();
+      clearTimeout(temporizadorInvitacion);
+
+      // Vibración corta (si el dispositivo la soporta)
+      if (navigator.vibrate) navigator.vibrate(40);
+
+      // Sonido de clic sutil generado al vuelo (no depende de ningún archivo)
+      reproducirTono(880, 0.2, 0.15);
+
+      // Guardamos en qué segundo y volumen iba la música, para que
+      // principal.html la continúe justo ahí en vez de reiniciarla
+      try {
+        localStorage.setItem('musicaTiempo', cancionFondo.currentTime.toString());
+        localStorage.setItem('musicaVolumen', cancionFondo.volume.toString());
+      } catch (err) {}
+
+      cancionFondo.pause();
+      document.body.classList.add('saliendo');
+      document.getElementById('destello').classList.add('activo');
+      setTimeout(() => { window.location.href = boton.href; }, 650);
+    });
+
+    // --- Fondo animado: luna, estrellas, estrellas fugaces y corazones en destello ---
+    const fondo = document.getElementById('fondo');
+
+    const luna = document.createElement('div');
+    luna.className = 'luna-fondo';
+    fondo.appendChild(luna);
+
+    for (let i = 0; i < 70; i++) {
+      const e = document.createElement('div');
+      e.className = 'estrella-fondo';
+      e.style.left = Math.random() * 100 + '%';
+      e.style.top = Math.random() * 100 + '%';
+      e.style.animationDelay = (Math.random() * 3).toFixed(2) + 's';
+      fondo.appendChild(e);
+    }
+
+    function lanzarEstrellaFugazFondo(){
+      const zona = document.createElement('div');
+      zona.className = 'zona-estrella-fugaz';
+      zona.style.left = (Math.random() * 55) + '%';
+      zona.style.top = (Math.random() * 35) + '%';
+      // Ángulo de vuelo ligeramente variable para que no todas se vean idénticas
+      const angulo = (20 + Math.random() * 12).toFixed(1);
+      zona.style.setProperty('--angulo-estrella', angulo + 'deg');
+      const duracion = (3 + Math.random() * 0.8).toFixed(2);
+      zona.style.animation = `cruzarCieloFondo ${duracion}s ease-out forwards`;
+
+      const ef = document.createElement('div');
+      ef.className = 'estrella-fugaz-fondo';
+      zona.appendChild(ef);
+
+      let deseoPedido = false;
+      function pedirDeseo(evento){
+        if (deseoPedido) return;
+        deseoPedido = true;
+        if (evento) evento.preventDefault();
+        // Se detiene justo donde fue tocada y se apaga con un pequeño destello,
+        // en vez de seguir su animación normal (para que se sienta que "respondió").
+        const rectActual = zona.getBoundingClientRect();
+        zona.style.animation = 'none';
+        zona.style.left = rectActual.left + 'px';
+        zona.style.top = rectActual.top + 'px';
+        zona.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        zona.style.opacity = '0';
+        zona.style.transform = 'scale(1.6)';
+        mostrarMensajeDeseo(zona);
+        reproducirTono(1568, 0.5, 0.12);
+        if (navigator.vibrate) { try { navigator.vibrate(25); } catch (err) {} }
+      }
+      zona.addEventListener('click', pedirDeseo);
+      zona.addEventListener('touchstart', pedirDeseo, { passive: false });
+
+      fondo.appendChild(zona);
+      setTimeout(() => zona.remove(), (parseFloat(duracion) * 1000) + 600);
+    }
+
+    // Mensajito que aparece si logra tocar una estrella fugaz antes de que se vaya
+    function mostrarMensajeDeseo(zona){
+      const rectZona = zona.getBoundingClientRect();
+      const cx = rectZona.left + rectZona.width / 2;
+      const cy = rectZona.top + rectZona.height / 2;
+
+      const msj = document.createElement('div');
+      msj.className = 'mensaje-deseo';
+      msj.textContent = '✨ Pide Un Deseo...';
+      msj.style.left = cx + 'px';
+      msj.style.top = rectZona.top + 'px';
+      document.body.appendChild(msj);
+      requestAnimationFrame(() => msj.classList.add('visible'));
+      setTimeout(() => msj.remove(), 2200);
+      if (navigator.vibrate) { try { navigator.vibrate(20); } catch (err) {} }
+
+      // Pequeño estallido de chispas doradas para que se sienta como un logro
+      for (let i = 0; i < 10; i++) {
+        const chispa = document.createElement('div');
+        chispa.className = 'chispa-deseo';
+        const angulo = Math.random() * Math.PI * 2;
+        const distancia = 20 + Math.random() * 45;
+        chispa.style.left = cx + 'px';
+        chispa.style.top = cy + 'px';
+        chispa.style.setProperty('--dx', (Math.cos(angulo) * distancia).toFixed(0) + 'px');
+        chispa.style.setProperty('--dy', (Math.sin(angulo) * distancia).toFixed(0) + 'px');
+        chispa.style.animationDelay = (Math.random() * 0.15).toFixed(2) + 's';
+        document.body.appendChild(chispa);
+        setTimeout(() => chispa.remove(), 1200);
+      }
+    }
+
+    setInterval(() => {
+      if (Math.random() < 0.4) lanzarEstrellaFugazFondo();
+    }, 4000);
+
+    const emojisCorazonFondo = ['❤️','💛','💕','✨'];
+    function lanzarCorazonDestello(){
+      const c = document.createElement('div');
+      c.className = 'corazon-destello';
+      c.textContent = emojisCorazonFondo[Math.floor(Math.random() * emojisCorazonFondo.length)];
+      c.style.left = (5 + Math.random() * 90) + '%';
+      c.style.top = (5 + Math.random() * 85) + '%';
+      fondo.appendChild(c);
+      setTimeout(() => c.remove(), 3600);
+    }
+    setInterval(lanzarCorazonDestello, 1600);
+
+    // --- Corazón de chispas moradas (curva paramétrica del corazón) ---
+    const capaEstrellas = document.getElementById('capaEstrellas');
+    const anchoZona = 150, altoZona = 130;
+    const centroX = anchoZona / 2, centroY = altoZona / 2 + 10;
+    const escalaCorazon = 4.6;
+
+    const puntos = [];
+    const cantidadPuntos = 130;
+    for (let i = 0; i < cantidadPuntos; i++) {
+      const t = (i / cantidadPuntos) * Math.PI * 2;
+      const x = 16 * Math.pow(Math.sin(t), 3);
+      const y = 13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t);
+      puntos.push({
+        x: centroX + x * escalaCorazon + (Math.random() * 5 - 2.5),
+        y: centroY - y * escalaCorazon + (Math.random() * 5 - 2.5)
+      });
+    }
+    puntos.forEach((p, i) => {
+      const chispa = document.createElement('div');
+      chispa.className = 'chispa-corazon';
+      const tam = (2 + Math.random() * 2.2).toFixed(1);
+      chispa.style.width = tam + 'px';
+      chispa.style.height = tam + 'px';
+      chispa.style.left = (p.x / anchoZona * 100) + '%';
+      chispa.style.top = (p.y / altoZona * 100) + '%';
+      chispa.style.animationDelay = (Math.random() * 2).toFixed(2) + 's, ' + (Math.random() * 3).toFixed(2) + 's';
+      capaEstrellas.appendChild(chispa);
+    });
+
+    // Interactividad táctil de los corazones (el :hover ya cubre computadora)
+    const zonaCorazon1El = document.getElementById('zonaCorazon1');
+    const zonaCorazon2El = document.getElementById('zonaCorazon2');
+    [zonaCorazon1El, zonaCorazon2El].forEach(zona => {
+      zona.addEventListener('touchstart', () => {
+        zona.classList.add('activado');
+        setTimeout(() => zona.classList.remove('activado'), 700);
+      });
+    });
+
+    // El segundo corazón empieza apagado y se "enciende" al tocar el primero
+    function desbloquearSegundoCorazon(){
+      if (!zonaCorazon2El.classList.contains('bloqueado')) return;
+      zonaCorazon2El.classList.remove('bloqueado');
+      zonaCorazon2El.classList.add('desbloqueando');
+      if (navigator.vibrate) { try { navigator.vibrate(18); } catch (err) {} }
+      reproducirTono(1046, 0.25, 0.1);
+      setTimeout(() => zonaCorazon2El.classList.remove('desbloqueando'), 800);
+    }
+    zonaCorazon1El.addEventListener('click', desbloquearSegundoCorazon);
+    zonaCorazon1El.addEventListener('touchstart', desbloquearSegundoCorazon);
+
+    // --- Inclinar el celular mueve levemente el cielo de fondo (parallax) ---
+    function aplicarInclinacionCielo(evento){
+      const gamma = evento.gamma || 0; // izquierda-derecha
+      const beta = evento.beta || 0;   // adelante-atrás
+      const despX = Math.max(-14, Math.min(14, gamma * 0.35));
+      const despY = Math.max(-10, Math.min(10, (beta - 45) * 0.15));
+      fondo.style.transform = `translate(${despX.toFixed(1)}px, ${despY.toFixed(1)}px)`;
+    }
+    function solicitarPermisoOrientacion(){
+      if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+        DeviceOrientationEvent.requestPermission().then(estado => {
+          if (estado === 'granted') window.addEventListener('deviceorientation', aplicarInclinacionCielo);
+        }).catch(() => {});
+      } else if (typeof DeviceOrientationEvent !== 'undefined') {
+        window.addEventListener('deviceorientation', aplicarInclinacionCielo);
+      }
+    }
+    document.addEventListener('pointerdown', solicitarPermisoOrientacion, { once: true });
+
+    // Ocultar la pantalla de carga solo cuando la fuente del título ya esté
+    // lista (para que no se vea "saltar" de la fuente de respaldo a la bonita).
+    // Se pone un tope de 2.5s por si el navegador tarda o no soporta document.fonts.
+    const tiempoMinimoVisible = new Promise(resolve => setTimeout(resolve, 700));
+    const fuenteLista = (document.fonts && document.fonts.ready)
+      ? Promise.race([document.fonts.ready, new Promise(resolve => setTimeout(resolve, 2500))])
+      : Promise.resolve();
+
+    Promise.all([tiempoMinimoVisible, fuenteLista]).then(() => {
+      document.getElementById('pantallaCarga').classList.add('oculta');
+    });
+  </script>
+</body>
+</html>

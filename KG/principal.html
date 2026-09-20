@@ -1,0 +1,2056 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Karime Gonzalez 💛</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="description" content="Flores amarillas para Karime 🌻">
+<meta property="og:title" content="Flores Amarillas Para Ti 💛">
+<meta property="og:description" content="Un Jardín De Girasoles, Rosas Y Gerberas Solo Para Ti❤️">
+<meta property="og:type" content="website">
+<meta property="og:image" content="preview.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+  *{box-sizing:border-box;}
+  html,body{
+    margin:0;
+    height:100%;
+    height:100dvh; /* corrige el bug de "100vh" en navegadores móviles (WhatsApp, Safari, Chrome) */
+    height: var(--alto-real, 100dvh); /* respaldo extra para navegadores antiguos (ej. Samsung Internet viejo) */
+    background: radial-gradient(ellipse at 50% 0%, #ffd9a0 0%, #ff9d6c 45%, #7d4a6a 100%);
+    overflow:hidden;
+    font-family: 'Georgia', serif;
+    transition: background 8s ease;
+  }
+  html.noche, body.noche{
+    background: radial-gradient(ellipse at 50% 0%, #16213a 0%, #0a0e1a 70%) !important;
+  }
+  body{
+    opacity:0;
+    animation: aparecer 1s ease forwards;
+  }
+  @keyframes aparecer{
+    from{ opacity:0; }
+    to{ opacity:1; }
+  }
+  #escena{
+    position:relative;
+    width:100%;
+    height:100%;
+  }
+  #fondoCielo{
+    position:absolute;
+    top:0; left:0;
+    width:100%; height:100%;
+    pointer-events:none;
+    transition: transform 0.35s ease-out;
+  }
+  .estrella{
+    position:absolute;
+    width:2px; height:2px;
+    background:#fff;
+    border-radius:50%;
+    animation: titilar 3s ease-in-out infinite;
+    pointer-events:none;
+  }
+  @keyframes titilar{
+    0%,100%{ opacity:0.2; }
+    50%{ opacity:1; }
+  }
+  .mensaje{
+    position:absolute;
+    top:38%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    text-align:center;
+    color:#ffe14d;
+    font-size: clamp(1rem, 2.6vw, 1.6rem);
+    line-height:1.6;
+    text-shadow: 0 0 10px rgba(255,225,77,0.6);
+    max-width: 640px;
+    z-index:5;
+    pointer-events:none;
+  }
+  .campo{
+    position:absolute;
+    bottom:0; left:0; right:0;
+    height:75%;
+    display:flex;
+    justify-content:space-evenly;
+    align-items:flex-end;
+  }
+  .flor-tamano{
+    transform-origin: bottom center;
+  }
+  .flor{
+    position:relative;
+    transform-origin: bottom center;
+    animation: mecer 4.5s ease-in-out infinite;
+    cursor:pointer;
+  }
+  .flor svg{ display:block; overflow:visible; }
+  @keyframes mecer{
+    0%,100%{ transform: rotate(-3deg); }
+    50%{ transform: rotate(3deg); }
+  }
+  .corazon{
+    position:absolute;
+    bottom:5%;
+    font-size:18px;
+    opacity:0;
+    animation: flotar 6s ease-in infinite;
+    pointer-events:none;
+  }
+  @keyframes flotar{
+    0%{ opacity:0; transform: translateY(0) scale(0.8); }
+    10%{ opacity:1; }
+    80%{ opacity:0.9; }
+    100%{ opacity:0; transform: translateY(-70vh) scale(1.1); }
+  }
+  .control-musica{
+    position:absolute;
+    top:16px; right:16px;
+    z-index:10;
+    background: rgba(0,0,0,0.55);
+    color:#ffe14d;
+    border:1px solid #ffe14d;
+    border-radius:14px;
+    padding:9px 15px;
+    font-size:1rem;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .control-musica button{
+    background:none;
+    border:none;
+    color:#ffe14d;
+    font-size:1.3rem;
+    cursor:pointer;
+    padding:0;
+  }
+  .control-musica .nombre-cancion{
+    max-width:100px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    font-style:italic;
+    opacity:0.9;
+  }
+  .control-musica .tiempo-cancion{
+    font-size:0.85rem;
+    opacity:0.8;
+    min-width:70px;
+  }
+  .control-musica input[type="range"]{
+    width:56px;
+    accent-color:#ffe14d;
+    cursor:pointer;
+  }
+  @media (max-width:420px){
+    .control-musica .nombre-cancion, .control-musica input[type="range"]{
+      display:none;
+    }
+  }
+  .luna{
+    position:absolute;
+    top:6%; left:8%;
+    width:70px; height:70px;
+    border-radius:50%;
+    background: radial-gradient(circle at 35% 35%, #fffef2, #f3edc9 60%, #e5dca0 100%);
+    box-shadow: 0 0 40px 12px rgba(255,250,230,0.35);
+    pointer-events:none;
+    animation: derivaLuna 75s ease-in-out infinite;
+  }
+  @keyframes derivaLuna{
+    0%,100%{ transform: translateX(-22px); }
+    50%{ transform: translateX(22px); }
+  }
+  .luciernaga{
+    position:absolute;
+    width:4px; height:4px;
+    border-radius:50%;
+    background:#e8ff6b;
+    box-shadow: 0 0 6px 2px rgba(232,255,107,0.9);
+    animation: flotarLuciernaga 8s ease-in-out infinite;
+    pointer-events:none;
+  }
+  @keyframes flotarLuciernaga{
+    0%,100%{ transform: translate(0,0); opacity:0.3; }
+    25%{ transform: translate(20px,-25px); opacity:1; }
+    50%{ transform: translate(-10px,-45px); opacity:0.5; }
+    75%{ transform: translate(-25px,-15px); opacity:1; }
+  }
+  .zona-estrella-fugaz{
+    position:absolute;
+    width:100px; height:100px;
+    z-index:4;
+    cursor:pointer;
+    transition: transform 0.15s ease;
+  }
+  .zona-estrella-fugaz:active{
+    transform: scale(1.3);
+  }
+  .estrella-fugaz{
+    position:absolute;
+    top:50%; left:50%;
+    width:3px; height:3px;
+    background: radial-gradient(circle, #ffffff 0%, #fff6d8 45%, transparent 75%);
+    border-radius:50%;
+    box-shadow:
+      0 0 6px 2px rgba(255,255,255,0.95),
+      0 0 16px 6px rgba(255,241,181,0.55),
+      0 0 28px 10px rgba(255,225,140,0.25);
+    pointer-events:none;
+  }
+  .estrella-fugaz::before{
+    /* estela larga y afilada, apuntando hacia atrás en el ángulo de vuelo */
+    content:'';
+    position:absolute;
+    top:50%; right:50%;
+    width:130px; height:2px;
+    background: linear-gradient(90deg,
+      transparent,
+      rgba(255,241,181,0.35) 35%,
+      rgba(255,250,225,0.75) 75%,
+      rgba(255,255,255,0.95) 100%);
+    border-radius:2px;
+    transform-origin: right center;
+    transform: translateY(-50%) rotate(var(--angulo-estrella, 24deg));
+    filter: blur(0.4px);
+  }
+  .estrella-fugaz::after{
+    /* segunda estela, más fina y corta, para dar sensación de brillo doble */
+    content:'';
+    position:absolute;
+    top:50%; right:50%;
+    width:60px; height:0.8px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.9));
+    transform-origin: right center;
+    transform: translateY(-50%) rotate(var(--angulo-estrella, 24deg)) translateY(-1.5px);
+  }
+  @keyframes cruzarCielo{
+    0%{ opacity:0; transform: translate(0,0) scale(0.7); pointer-events:none; }
+    8%{ opacity:1; transform: translate(20px, 11px) scale(1); }
+    12%{ pointer-events:auto; }
+    78%{ opacity:1; pointer-events:auto; }
+    94%{ opacity:0; transform: translate(300px, 165px) scale(0.8); pointer-events:none; }
+    100%{ opacity:0; }
+  }
+  .chispa-estrella-jardin{
+    position:fixed;
+    width:4px; height:4px;
+    background: radial-gradient(circle, #fff6d8, #ffe14d 70%, transparent);
+    border-radius:50%;
+    box-shadow: 0 0 6px 2px rgba(255,225,77,0.9);
+    pointer-events:none;
+    z-index:16;
+    opacity:0;
+    animation: dispararChispaEstrellaJardin 1s ease-out forwards;
+  }
+  @keyframes dispararChispaEstrellaJardin{
+    0%{ opacity:0; transform: translate(-50%,-50%) translate(0,0) scale(0.6); }
+    15%{ opacity:1; }
+    100%{ opacity:0; transform: translate(-50%,-50%) translate(var(--dx), var(--dy)) scale(0.3); }
+  }
+  .mensaje-especial{
+    position:absolute;
+    padding:8px 16px;
+    background: rgba(0,0,0,0.65);
+    border:1px solid #ffe14d;
+    border-radius:14px;
+    color:#ffe14d;
+    font-size:1.05rem;
+    font-weight:bold;
+    white-space:nowrap;
+    pointer-events:none;
+    opacity:0;
+    transform: translate(-50%, 0) scale(0.8);
+    animation: mostrarMensaje 2.4s ease forwards;
+    z-index:8;
+  }
+  @keyframes mostrarMensaje{
+    0%{ opacity:0; transform: translate(-50%, 10px) scale(0.8); }
+    15%{ opacity:1; transform: translate(-50%, -10px) scale(1); }
+    80%{ opacity:1; }
+    100%{ opacity:0; transform: translate(-50%, -30px) scale(0.9); }
+  }
+  .petalo-cayendo{
+    position:absolute;
+    top:-20px;
+    border-radius:50% 0 50% 0;
+    opacity:0.85;
+    animation: caerPetalo linear infinite;
+    pointer-events:none;
+  }
+  @keyframes caerPetalo{
+    0%{ transform: translateY(0) rotate(0deg); }
+    100%{ transform: translateY(105vh) rotate(360deg); }
+  }
+  .brillo-flor{
+    position:absolute;
+    top:0; left:-60%;
+    width:60%; height:100%;
+    background: linear-gradient(100deg, transparent, rgba(255,255,255,0.55), transparent);
+    pointer-events:none;
+    animation: recorrerBrillo 5s ease-in-out infinite;
+  }
+  @keyframes recorrerBrillo{
+    0%, 70%{ left:-60%; }
+    100%{ left:160%; }
+  }
+  .elemento-nocturno{
+    transition: opacity 3s ease;
+    opacity:0;
+  }
+  .noche .elemento-nocturno{
+    opacity:1;
+  }
+  .mensaje-final{
+    position:absolute;
+    top:62%;
+    left:50%;
+    transform: translate(-50%, 20px);
+    text-align:center;
+    color:#ffe14d;
+    font-size: clamp(1rem, 2.4vw, 1.4rem);
+    text-shadow: 0 0 10px rgba(0,0,0,0.6);
+    opacity:0;
+    z-index:6;
+    transition: opacity 2s ease, transform 2s ease;
+  }
+  .mensaje-final.visible{
+    opacity:1;
+    transform: translate(-50%, 0);
+  }
+  .boton-volver-noche{
+    position:absolute;
+    top:60px; left:16px;
+    z-index:10;
+    background: rgba(0,0,0,0.4);
+    color:#ffe14d;
+    border:1px solid #ffe14d;
+    border-radius:20px;
+    padding:8px 16px;
+    font-size:0.8rem;
+    cursor:pointer;
+    opacity:0;
+    pointer-events:none;
+    transition: opacity 1.5s ease;
+  }
+  .boton-volver-noche.visible{
+    opacity:1;
+    pointer-events:auto;
+  }
+  .boton-guardar-recuerdo{
+    position:absolute;
+    top:104px; left:16px;
+    z-index:10;
+    background: rgba(0,0,0,0.4);
+    color:#ffe14d;
+    border:1px solid #ffe14d;
+    border-radius:20px;
+    padding:8px 16px;
+    font-size:0.8rem;
+    cursor:pointer;
+    opacity:0;
+    pointer-events:none;
+    transition: opacity 1.5s ease;
+  }
+  .boton-guardar-recuerdo.visible{
+    opacity:1;
+    pointer-events:auto;
+  }
+  .boton-compartir{
+    position:absolute;
+    top:16px; left:16px;
+    z-index:10;
+    background: rgba(0,0,0,0.4);
+    color:#ffe14d;
+    border:1px solid rgba(255,225,77,0.6);
+    border-radius:20px;
+    padding:8px 16px;
+    font-size:0.8rem;
+    cursor:pointer;
+  }
+  .mensaje-final-2{
+    position:absolute;
+    top:70%;
+    left:50%;
+    transform: translate(-50%, 20px);
+    text-align:center;
+    color:#ffe8b0;
+    font-size: clamp(0.85rem, 2vw, 1.1rem);
+    text-shadow: 0 0 8px rgba(0,0,0,0.6);
+    opacity:0;
+    z-index:6;
+    transition: opacity 2s ease, transform 2s ease;
+  }
+  .mensaje-final-2.visible{
+    opacity:1;
+    transform: translate(-50%, 0);
+  }
+  .contador-flores{
+    position:absolute;
+    top:16px;
+    left:50%;
+    transform: translateX(-50%);
+    z-index:10;
+    background: rgba(0,0,0,0.4);
+    color:#ffe14d;
+    border:1px solid rgba(255,225,77,0.5);
+    border-radius:20px;
+    padding:6px 16px;
+    font-size:0.8rem;
+    transition: all 0.3s ease;
+  }
+  .contador-flores.completo{
+    color:#0a0e1a;
+    background:#ffe14d;
+    border-color:#ffe14d;
+    font-weight:bold;
+  }
+  .flor-especial svg{
+    filter: drop-shadow(0 0 8px rgba(255, 225, 77, 0.9));
+  }
+  .insignia-tocada{
+    position:absolute;
+    top:-8px;
+    right:-8px;
+    font-size:18px;
+    line-height:1;
+    z-index:2;
+    filter: drop-shadow(0 1px 3px rgba(0,0,0,0.45)) drop-shadow(0 0 4px rgba(255,255,255,0.3));
+    animation: aparecerInsignia 0.45s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  @keyframes aparecerInsignia{
+    0%{ transform: scale(0) rotate(-20deg); opacity:0; }
+    100%{ transform: scale(1) rotate(0deg); opacity:1; }
+  }
+  .letra-especial{
+    position:absolute;
+    font-size:14px;
+    font-weight:bold;
+    color:#ffe14d;
+    text-shadow: 0 0 6px rgba(255,225,77,0.8);
+    pointer-events:none;
+    opacity:0;
+    animation: flotarLetraEspecial 1.8s ease-out forwards;
+    z-index:7;
+  }
+  @keyframes flotarLetraEspecial{
+    0%{ opacity:0; transform: translate(0,0) scale(0.6); }
+    15%{ opacity:1; }
+    100%{ opacity:0; transform: translate(var(--dx,0px), -70px) scale(1.1); }
+  }
+  .mensaje-secreto{
+    position:fixed;
+    top:50%; left:50%;
+    transform: translate(-50%,-50%) scale(0.7);
+    z-index:70;
+    background: rgba(0,0,0,0.78);
+    border:2px solid #ffe14d;
+    border-radius:18px;
+    padding:18px 26px;
+    color:#ffe14d;
+    font-weight:bold;
+    font-size:1.2rem;
+    text-align:center;
+    max-width:80vw;
+    box-shadow: 0 0 30px rgba(255,225,77,0.35);
+    opacity:0;
+    pointer-events:none;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .mensaje-secreto.visible{
+    opacity:1;
+    transform: translate(-50%,-50%) scale(1);
+  }
+  @media (max-width: 640px){
+    .mensaje-secreto{
+      font-size:1.4rem;
+      padding:20px 28px;
+    }
+  }
+  .lluvia-contenedor{
+    position:fixed;
+    top:0; left:0;
+    width:100%; height:100%;
+    z-index:60;
+    pointer-events:none;
+    overflow:hidden;
+  }
+  .lluvia-item{
+    position:absolute;
+    top:-50px;
+    opacity:0;
+    animation: caerLluvia linear forwards;
+  }
+  @keyframes caerLluvia{
+    0%{ transform: translateY(0) rotate(0deg); opacity:0; }
+    8%{ opacity:1; }
+    92%{ opacity:1; }
+    100%{ transform: translateY(115vh) rotate(360deg); opacity:0; }
+  }
+  .flor-misteriosa{
+    position:fixed;
+    top:48%;
+    left:50%;
+    transform: translate(-50%,-50%) scale(0.7);
+    z-index:20;
+    opacity:0;
+    pointer-events:none;
+    transition: opacity 1.5s ease, transform 1.5s ease;
+  }
+  .flor-misteriosa.visible{
+    opacity:1;
+    pointer-events:auto;
+    transform: translate(-50%,-50%) scale(1);
+  }
+  @media (max-width: 640px){
+    .flor-misteriosa.visible{
+      transform: translate(-50%,-50%) scale(1.7);
+    }
+  }
+  .constelacion-contenedor{
+    position:fixed;
+    top:16%;
+    left:50%;
+    transform: translateX(-50%);
+    width: min(72vw, 340px);
+    z-index:55;
+    pointer-events:none;
+    opacity:0;
+    transition: opacity 1.4s ease;
+  }
+  .constelacion-contenedor.visible{
+    opacity:1;
+  }
+  .constelacion-contenedor.saliendo{
+    opacity:0;
+  }
+  .constelacion-linea{
+    fill:none;
+    stroke:#ffe14d;
+    stroke-width:1.4;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+    filter: drop-shadow(0 0 5px rgba(255,225,77,0.75));
+  }
+  .constelacion-punto{
+    opacity:0.1;
+    animation: encenderEstrellaConstelacion 0.7s ease forwards;
+  }
+  @keyframes encenderEstrellaConstelacion{
+    to{ opacity:1; }
+  }
+  .constelacion-texto{
+    opacity:0;
+    transition: opacity 1.3s ease;
+    font-family: 'Georgia', serif;
+    font-style: italic;
+  }
+  .constelacion-texto.visible{
+    opacity:1;
+  }
+  @media (max-width: 640px){
+    .constelacion-contenedor{
+      top:13%;
+      width: min(80vw, 320px);
+    }
+  }
+  #pantallaCarga{
+    position:fixed;
+    top:0; left:0;
+    width:100%; height:100%;
+    background: radial-gradient(ellipse at 50% 0%, #16213a 0%, #0a0e1a 70%);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:16px;
+    z-index:100;
+    transition: opacity 0.8s ease;
+  }
+  #pantallaCarga.oculta{
+    opacity:0;
+    pointer-events:none;
+  }
+  .spinner-carga{
+    width:46px; height:46px;
+    border-radius:50%;
+    border: 3px solid rgba(255,225,77,0.25);
+    border-top-color: #ffe14d;
+    animation: girarSpinner 1s linear infinite;
+  }
+  @keyframes girarSpinner{
+    to{ transform: rotate(360deg); }
+  }
+  #pantallaCarga p{
+    color:#ffe14d;
+    font-family: 'Georgia', serif;
+    font-size:0.95rem;
+    letter-spacing:0.5px;
+  }
+
+  /* --- Sobre con carta --- */
+  .zona-sobre{
+    position:fixed;
+    bottom:6%;
+    right:6%;
+    z-index:9;
+    cursor:pointer;
+    width:76px;
+    height:56px;
+    transition: left 5s ease-in-out, top 5s ease-in-out;
+  }
+  .zona-sobre svg{
+    display:block;
+    width:100%;
+    height:100%;
+    filter: drop-shadow(0 4px 10px rgba(0,0,0,0.5));
+    animation: flotarSobre 3.4s ease-in-out infinite;
+  }
+  @keyframes flotarSobre{
+    0%,100%{ transform: translateY(0); }
+    50%{ transform: translateY(-6px); }
+  }
+  .zona-sobre.llamando-atencion svg{
+    animation: flotarSobre 3.4s ease-in-out infinite, pulsoSobre 1.6s ease-in-out infinite;
+  }
+  @keyframes pulsoSobre{
+    0%,100%{ filter: drop-shadow(0 4px 10px rgba(0,0,0,0.5)) drop-shadow(0 0 0px rgba(255,225,77,0)); }
+    50%{ filter: drop-shadow(0 4px 10px rgba(0,0,0,0.5)) drop-shadow(0 0 14px rgba(255,225,77,0.9)); }
+  }
+  .zona-sobre .tapa-sobre{
+    transform-origin: 50% 0%;
+    transition: transform 0.6s ease;
+  }
+  .zona-sobre.abierto .tapa-sobre{
+    transform: rotateX(150deg);
+  }
+  .zona-sobre.abierto svg{
+    animation: none;
+  }
+  .texto-abrir-sobre{
+    position:absolute;
+    bottom:100%;
+    right:0;
+    margin-bottom:6px;
+    color:#ffe14d;
+    font-size:0.75rem;
+    text-align:center;
+    white-space:nowrap;
+    text-shadow: 0 0 6px rgba(0,0,0,0.7);
+    animation: titilarTexto 2s ease-in-out infinite;
+  }
+  @keyframes titilarTexto{
+    0%,100%{ opacity:0.6; }
+    50%{ opacity:1; }
+  }
+  .carta-overlay{
+    position:fixed;
+    top:0; left:0;
+    width:100%; height:100%;
+    background: rgba(0,0,0,0);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:50;
+    opacity:0;
+    pointer-events:none;
+    transition: opacity 0.5s ease, background 0.5s ease;
+  }
+  .carta-overlay.visible{
+    background: rgba(0,0,0,0.75);
+    opacity:1;
+    pointer-events:auto;
+  }
+  .carta-papel{
+    position:relative;
+    width: min(88vw, 420px);
+    max-height:80vh;
+    overflow-y:auto;
+    background:
+      linear-gradient(180deg, rgba(255,253,245,0.5), rgba(253,246,224,0.55)),
+      url('carta-fondo.jpg') center/cover no-repeat;
+    color:#3a2c14;
+    border-radius:6px;
+    padding: 34px 28px 28px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    font-family: 'Georgia', serif;
+    line-height:1.7;
+    font-size:0.95rem;
+    transform: translateY(40px) scale(0.9);
+    opacity:0;
+    transition: transform 0.6s cubic-bezier(0.2,0.8,0.2,1), opacity 0.6s ease;
+  }
+  .carta-overlay.visible .carta-papel{
+    transform: translateY(0) scale(1);
+    opacity:1;
+  }
+  .carta-papel p{
+    margin:0 0 14px;
+    text-shadow: 0 1px 2px rgba(255,255,255,0.85), 0 0 6px rgba(255,255,255,0.5);
+  }
+  .carta-papel .firma{
+    text-align:right;
+    font-style:italic;
+    margin-top:20px;
+  }
+  .cerrar-carta{
+    position:absolute;
+    top:8px;
+    right:12px;
+    background:none;
+    border:none;
+    color:#4a3a22;
+    font-size:1.3rem;
+    cursor:pointer;
+    line-height:1;
+  }
+  .juego-si-no{
+    margin-top:22px;
+    text-align:center;
+  }
+  .juego-si-no p{
+    margin:0 0 14px;
+    font-weight:bold;
+  }
+  .zona-botones-si-no, .zona-botones-cafe{
+    position:relative;
+    height:60px;
+  }
+  .juego-cafe{
+    margin-top:22px;
+    text-align:center;
+    opacity:0;
+    max-height:0;
+    overflow:hidden;
+    transition: opacity 0.6s ease, max-height 0.6s ease;
+  }
+  .juego-cafe.visible{
+    opacity:1;
+    max-height:220px;
+  }
+  .juego-cafe p{
+    margin:0 0 14px;
+    font-weight:bold;
+  }
+  .boton-si, .boton-no{
+    padding:10px 22px;
+    border-radius:20px;
+    border:none;
+    font-size:0.9rem;
+    cursor:pointer;
+    font-family: 'Georgia', serif;
+  }
+  .boton-si{
+    background:#ffe14d;
+    color:#3a2c0a;
+    position:relative;
+    z-index:1;
+  }
+  .boton-no{
+    background:transparent;
+    border:2px solid #2a2a2a;
+    color:#2a2a2a;
+    position:absolute;
+    top:0;
+    left:calc(50% + 50px);
+    transition: left 0.2s ease, top 0.2s ease;
+  }
+  .respuesta-si-no{
+    margin-top:14px;
+    font-style:italic;
+    opacity:0;
+    transition: opacity 0.6s ease;
+  }
+  .respuesta-si-no.visible{
+    opacity:1;
+  }
+  .destello-corazon-carta{
+    position:fixed;
+    left:50%;
+    top:50%;
+    font-size:22px;
+    z-index:51;
+    pointer-events:none;
+    opacity:0;
+    animation: destelloCartaCorazon 1.3s ease-out forwards;
+  }
+  @keyframes destelloCartaCorazon{
+    0%{ opacity:0; transform: translate(-50%,-50%) translate(0,0) scale(0.4); }
+    15%{ opacity:1; transform: translate(-50%,-50%) translate(calc(var(--dx) * 0.3), calc(var(--dy) * 0.3)) scale(1); }
+    100%{ opacity:0; transform: translate(-50%,-50%) translate(var(--dx), var(--dy)) scale(0.8); }
+  }
+  .confetti-pieza{
+    position:fixed;
+    top:0; left:0;
+    width:7px; height:7px;
+    z-index:52;
+    pointer-events:none;
+    opacity:0;
+    animation: dispararConfetti 1.5s cubic-bezier(0.15,0.7,0.3,1) forwards;
+  }
+  @keyframes dispararConfetti{
+    0%{ opacity:0; transform: translate(-50%,-50%) translate(0,0) rotate(0deg) scale(0.5); }
+    14%{ opacity:1; }
+    100%{ opacity:0; transform: translate(-50%,-50%) translate(var(--dx), var(--dy)) rotate(var(--rot)) scale(0.85); }
+  }
+  @media (max-width: 640px){
+    .mensaje-especial{
+      white-space:normal;
+      max-width:82vw;
+      text-align:center;
+      transform: translate(-50%, 0) scale(0.8);
+      font-size:1.5rem;
+      padding:12px 22px;
+      border-width:2px;
+      line-height:1.35;
+    }
+    @keyframes mostrarMensaje{
+      0%{ opacity:0; transform: translate(-50%, 10px) scale(0.8); }
+      15%{ opacity:1; transform: translate(-50%, -10px) scale(1); }
+      80%{ opacity:1; }
+      100%{ opacity:0; transform: translate(-50%, -30px) scale(0.9); }
+    }
+    .mensaje{
+      font-size:1.55rem !important;
+      max-width:88vw;
+    }
+    .mensaje-final{
+      font-size:1.4rem !important;
+    }
+    .mensaje-final-2{
+      font-size:1.15rem !important;
+      max-width:88vw;
+    }
+    .contador-flores{
+      font-size:1.4rem;
+      padding:12px 26px;
+      border-width:2px;
+    }
+    .boton-compartir, .boton-volver-noche, .boton-guardar-recuerdo{
+      font-size:1.1rem;
+      padding:11px 20px;
+    }
+    .control-musica{
+      font-size:1.15rem;
+      padding:10px 16px;
+    }
+    .control-musica button{
+      font-size:1.5rem;
+    }
+    .insignia-tocada{
+      font-size:28px;
+      top:-12px;
+      right:-12px;
+    }
+    .letra-especial{
+      font-size:22px;
+    }
+    .texto-abrir-sobre{
+      font-size:1.25rem;
+    }
+    .zona-sobre{
+      bottom:4%;
+      right:5%;
+      width:118px;
+      height:88px;
+    }
+    .carta-papel{
+      width: min(94vw, 460px);
+      padding: 34px 24px 26px;
+      font-size:1.3rem;
+      line-height:1.8;
+    }
+    .juego-si-no p, .juego-cafe p{
+      font-size:1.25rem;
+    }
+    .boton-si, .boton-no{
+      font-size:1.2rem;
+      padding:14px 30px;
+    }
+    .respuesta-si-no{
+      font-size:1.2rem;
+    }
+  }
+
+  /* Para quien tenga activado "reducir movimiento" en su dispositivo:
+     se congelan las animaciones decorativas en su último cuadro en vez
+     de quitarlas de golpe, para evitar mareo o molestia visual. */
+  @media (prefers-reduced-motion: reduce){
+    *, *::before, *::after{
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+</style>
+</head>
+<body>
+<div id="pantallaCarga">
+  <div class="spinner-carga"></div>
+  <p>Preparando Tu Sorpresa, Sigue Las Indicaciones🌻...</p>
+  <p>Encuentra Todas Las Sorpresas 💕🫣❤️🌻...</p>
+</div>
+<div id="escena">
+  <div id="fondoCielo">
+    <div class="luna elemento-nocturno"></div>
+  </div>
+  <button class="boton-compartir" id="botonCompartir">🔗 Compartir</button>
+  <div class="contador-flores" id="contadorFlores">0/9 Flores Tocadas</div>
+  <div class="mensaje" id="mensaje">
+    Estas Flores Amarillas Son Un Regalo Para Ti<br>
+    Son Hermosas Como Tu Karime 😍😍
+  </div>
+  <div class="mensaje-final" id="mensajeFinal"> Presiona Todas Las Flores Para La Sorpresa</div>
+  <div class="mensaje-final-2" id="mensajeFinal2"> Presiona La Flor Sorpresa😍💕🫣</div>
+  <button id="botonVolverNoche" class="boton-volver-noche">☀️ Volver Al Día</button>
+  <button id="botonGuardarRecuerdo" class="boton-guardar-recuerdo">📸 Guardar Recuerdo</button>
+  <div class="campo" id="campo"></div>
+
+  <div class="zona-sobre" id="zonaSobre">
+    <p class="texto-abrir-sobre">Ábreme 💌</p>
+    <svg viewBox="0 0 100 74">
+      <rect x="2" y="14" width="96" height="58" rx="4" fill="#fff6d8" stroke="#e8c96b" stroke-width="1.5"/>
+      <path d="M4,16 L50,50 L96,16" fill="none" stroke="#e8c96b" stroke-width="1.5"/>
+      <path class="tapa-sobre" d="M2,16 L50,50 L98,16 L98,14 C98,14 74,14 50,14 C26,14 2,14 2,14 Z"
+            fill="#ffe8a3" stroke="#e8c96b" stroke-width="1.5"/>
+      <circle cx="50" cy="30" r="7" fill="#e0546b"/>
+      <path d="M50,26 C48,23 43,24 43,28 C43,32 50,36 50,36 C50,36 57,32 57,28 C57,24 52,23 50,26 Z" fill="#fff"/>
+    </svg>
+  </div>
+
+  <div class="carta-overlay" id="cartaOverlay">
+    <div class="carta-papel">
+      <button class="cerrar-carta" id="cerrarCarta">✕</button>
+      <p>Hola Karime,</p>
+      <p id="parrafoRegreso" style="display:none;">Viniste Otra Vez... Me Pone Feliz 💛</p>
+      <p>Hay Personas Que Llegan Y Sin Querer Se Quedan En La Cabeza De Uno... Tú Eres Una De Esas. No Sé Bien Cómo Decirte Todo Lo Que Pienso, Así Que Preferí Hacerte Este Jardín En Lugar De Un Mensaje Cualquiera.</p>
+      <p>Me Gusta Cuando Sonries, Me Gusta Cómo Hablas De Las Cosas Que Te Apasionan, Y Me Gusta Cómo Me Hace Sentir El Simple Hecho De Platicar Contigo. No Busco Presionarte Con Nada Ni Ponerte Etiquetas — Solo Quería Que Supieras Que Hay Alguien A Quien Le Importas De Verdad, Y Que Espero Seguir Conociéndote Poco A Poco.</p>
+      <p>Gracias Por Dejarme Regalarte Estas Flores (Aunque Sean Virtuales). Espero Que Este 21 De Septiembre Sea Tan Bonito Como Tú.</p>
+      <p style="font-style:italic;">Ah, Y Un Secreto: Este Jardín Tiene Más De Una Sorpresa Escondida... Solo Tienes Que Jugar Un Poco Con Él Para Encontrarlas 😉</p>
+      <p class="firma">Con Cariño,<br>JM 🌻</p>
+
+      <div class="juego-si-no">
+        <p>¿Te Gustó Tu Sorpresa? 🥺</p>
+        <div class="zona-botones-si-no" id="zonaBotonesSiNo">
+          <button class="boton-si" id="botonSi">Sí 💛</button>
+          <button class="boton-no" id="botonNo">No</button>
+        </div>
+        <p class="respuesta-si-no" id="respuestaSiNo">¡Sabía Que Te Iba A Gustar! 💛</p>
+
+        <div class="juego-cafe" id="juegoCafe">
+          <p>¿Estas Lista Para Tu Sorpresa?</p>
+          <div class="zona-botones-cafe" id="zonaBotonesCafe">
+            <button class="boton-si" id="botonSiCafe">Sí 💛</button>
+            <button class="boton-no" id="botonNoCafe">No</button>
+          </div>
+          <p class="respuesta-si-no" id="respuestaCafe">¡Genial!, Te Alistas Y Te Pones Hermosa Como Siempre Que Llego A Las 7:00 PM💛</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <audio id="cancion" src="Flores Amarillas.mp3" loop></audio>
+  <div class="control-musica" id="panelMusica">
+    <button id="botonMusica">🔇</button>
+    <span class="nombre-cancion">Flores Amarillas</span>
+    <span class="tiempo-cancion" id="tiempoCancion">0:00 / 0:00</span>
+    <input type="range" id="volumenCancion" min="0" max="1" step="0.01" value="1">
+  </div>
+</div>
+
+<script>
+  // Respaldo para navegadores viejos que no soportan 100dvh (algunos Samsung
+  // Internet desactualizados): calculamos el alto real de la pantalla en px.
+  function fijarAltoReal(){
+    document.documentElement.style.setProperty('--alto-real', window.innerHeight + 'px');
+  }
+  fijarAltoReal();
+  window.addEventListener('resize', fijarAltoReal);
+  window.addEventListener('orientationchange', fijarAltoReal);
+
+  // Contador de visitas: cada vez que abre el jardín completo (no solo la portada) suma uno.
+  // Para consultarlo, visita en tu navegador:
+  // https://countapi.mileshilliard.com/api/v1/get/flores-karime-jm-2026-jardin
+  fetch('https://countapi.mileshilliard.com/api/v1/hit/flores-karime-jm-2026-jardin').catch(() => {});
+
+
+  const escena = document.getElementById('escena');
+  const fondoCielo = document.getElementById('fondoCielo');
+  const campo = document.getElementById('campo');
+
+  // --- Audio compartido: un solo AudioContext para todos los efectos ---
+  // (crear uno nuevo por cada sonido puede agotar el límite que algunos
+  // navegadores, sobre todo Safari/iOS, imponen sobre contextos activos)
+  let contextoAudioCompartido = null;
+  function obtenerContextoAudio(){
+    if (!contextoAudioCompartido) {
+      contextoAudioCompartido = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    if (contextoAudioCompartido.state === 'suspended') {
+      contextoAudioCompartido.resume().catch(() => {});
+    }
+    return contextoAudioCompartido;
+  }
+  function reproducirTono(frecuencia, duracion, volumenPico, retardo){
+    try {
+      const ctx = obtenerContextoAudio();
+      const inicio = ctx.currentTime + (retardo || 0);
+      const osc = ctx.createOscillator();
+      const ganancia = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(frecuencia, inicio);
+      ganancia.gain.setValueAtTime(0.001, inicio);
+      ganancia.gain.exponentialRampToValueAtTime(volumenPico, inicio + 0.03);
+      ganancia.gain.exponentialRampToValueAtTime(0.001, inicio + duracion);
+      osc.connect(ganancia).connect(ctx.destination);
+      osc.start(inicio);
+      osc.stop(inicio + duracion);
+    } catch (err) { /* si el navegador lo bloquea, no pasa nada */ }
+  }
+
+  // Estrellas de fondo
+  for (let i = 0; i < 80; i++) {
+    const e = document.createElement('div');
+    e.className = 'estrella elemento-nocturno';
+    e.style.left = Math.random() * 100 + '%';
+    e.style.top = Math.random() * 60 + '%';
+    e.style.animationDelay = (Math.random() * 3).toFixed(2) + 's';
+    fondoCielo.appendChild(e);
+  }
+
+  // Luciérnagas parpadeando entre las flores
+  for (let i = 0; i < 14; i++) {
+    const l = document.createElement('div');
+    l.className = 'luciernaga elemento-nocturno';
+    l.style.left = (5 + Math.random() * 90) + '%';
+    l.style.top = (45 + Math.random() * 40) + '%';
+    l.style.animationDelay = (Math.random() * 6).toFixed(2) + 's';
+    l.style.animationDuration = (6 + Math.random() * 4).toFixed(2) + 's';
+    escena.appendChild(l);
+  }
+
+  // Estrellas fugaces ocasionales — tocarlas antes de que crucen el cielo permite pedir un deseo
+  function pedirDeseoEnJardin(zona){
+    const rect = zona.getBoundingClientRect();
+    const rectEscena = escena.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+
+    const msj = document.createElement('div');
+    msj.className = 'mensaje-especial';
+    msj.textContent = '✨ Pediste Un Deseo...';
+    msj.style.left = (cx - rectEscena.left) + 'px';
+    msj.style.top = (rect.top - rectEscena.top) + 'px';
+    escena.appendChild(msj);
+    setTimeout(() => msj.remove(), 2500);
+
+    for (let i = 0; i < 10; i++) {
+      const chispa = document.createElement('div');
+      chispa.className = 'chispa-estrella-jardin';
+      const angulo = Math.random() * Math.PI * 2;
+      const distancia = 20 + Math.random() * 45;
+      chispa.style.left = cx + 'px';
+      chispa.style.top = cy + 'px';
+      chispa.style.setProperty('--dx', (Math.cos(angulo) * distancia).toFixed(0) + 'px');
+      chispa.style.setProperty('--dy', (Math.sin(angulo) * distancia).toFixed(0) + 'px');
+      chispa.style.animationDelay = (Math.random() * 0.15).toFixed(2) + 's';
+      document.body.appendChild(chispa);
+      setTimeout(() => chispa.remove(), 1200);
+    }
+
+    reproducirTono(1568, 0.5, 0.12);
+    if (navigator.vibrate) { try { navigator.vibrate(25); } catch (err) {} }
+  }
+
+  function lanzarEstrellaFugaz(){
+    const zona = document.createElement('div');
+    zona.className = 'zona-estrella-fugaz';
+    zona.style.left = (Math.random() * 55) + '%';
+    zona.style.top = (Math.random() * 25) + '%';
+    const angulo = (20 + Math.random() * 12).toFixed(1);
+    zona.style.setProperty('--angulo-estrella', angulo + 'deg');
+    const duracion = (2.8 + Math.random() * 0.8).toFixed(2);
+    zona.style.animation = `cruzarCielo ${duracion}s ease-out forwards`;
+
+    const ef = document.createElement('div');
+    ef.className = 'estrella-fugaz';
+    zona.appendChild(ef);
+
+    let deseoPedido = false;
+    function manejarToque(evento){
+      if (deseoPedido) return;
+      deseoPedido = true;
+      if (evento) evento.preventDefault();
+      // Se detiene justo donde fue tocada y se apaga con un pequeño destello
+      const rectActual = zona.getBoundingClientRect();
+      zona.style.animation = 'none';
+      zona.style.left = rectActual.left + 'px';
+      zona.style.top = rectActual.top + 'px';
+      zona.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+      zona.style.opacity = '0';
+      zona.style.transform = 'scale(1.6)';
+      pedirDeseoEnJardin(zona);
+    }
+    zona.addEventListener('click', manejarToque);
+    zona.addEventListener('touchstart', manejarToque, { passive: false });
+
+    escena.appendChild(zona);
+    setTimeout(() => zona.remove(), (parseFloat(duracion) * 1000) + 600);
+  }
+  setInterval(() => {
+    if (Math.random() < 0.5) lanzarEstrellaFugaz();
+  }, 4000);
+
+  // Pétalos amarillos cayendo lentamente de fondo
+  const coloresPetalo = ['#ffdd33', '#ffe14d', '#f4c400'];
+  for (let i = 0; i < 16; i++) {
+    const pt = document.createElement('div');
+    pt.className = 'petalo-cayendo';
+    const tam = (6 + Math.random() * 6).toFixed(1);
+    pt.style.width = tam + 'px';
+    pt.style.height = tam + 'px';
+    pt.style.left = Math.random() * 100 + '%';
+    pt.style.background = coloresPetalo[Math.floor(Math.random() * coloresPetalo.length)];
+    pt.style.animationDuration = (10 + Math.random() * 10).toFixed(1) + 's';
+    pt.style.animationDelay = (Math.random() * 12).toFixed(1) + 's';
+    escena.appendChild(pt);
+  }
+
+  // Genera el tallo y las hojas, comunes a las tres flores
+  function crearTalloYHojas(anchoFlor, altoTallo, altoTotal){
+    return `
+      <path d="M ${anchoFlor/2} ${altoTotal - altoTallo*0.4}
+               C ${anchoFlor/2 - 28} ${altoTotal - altoTallo*0.4 - 6},
+                 ${anchoFlor/2 - 30} ${altoTotal - altoTallo*0.4 + 22},
+                 ${anchoFlor/2 - 4} ${altoTotal - altoTallo*0.4 + 18} Z"
+            fill="#2f8f3e"/>
+      <path d="M ${anchoFlor/2} ${altoTotal - altoTallo*0.65}
+               C ${anchoFlor/2 + 30} ${altoTotal - altoTallo*0.65 - 8},
+                 ${anchoFlor/2 + 32} ${altoTotal - altoTallo*0.65 + 20},
+                 ${anchoFlor/2 + 4} ${altoTotal - altoTallo*0.65 + 16} Z"
+            fill="#2f8f3e"/>
+      <path d="M ${anchoFlor/2} ${altoTotal}
+               C ${anchoFlor/2 - 2} ${altoTotal - altoTallo*0.5},
+                 ${anchoFlor/2 + 4} ${altoTotal - altoTallo*0.8},
+                 ${anchoFlor/2} ${altoTotal - altoTallo}"
+            stroke="#2f8f3e" stroke-width="6" fill="none" stroke-linecap="round"/>`;
+  }
+
+  // Cabeza de girasol: petalos anchos + centro con semillas
+  function cabezaGirasol(){
+    const numPetalos = 10;
+    let petalos = '';
+    for (let p = 0; p < numPetalos; p++) {
+      const angulo = p * (360 / numPetalos);
+      petalos += `<path d="M 0 -6 C -11 -18 -11 -38 0 -48 C 11 -38 11 -18 0 -6 Z"
+                        fill="${p % 2 === 0 ? '#ffcc00' : '#ffd93d'}"
+                        stroke="#e8a800" stroke-width="0.6"
+                        transform="rotate(${angulo})"/>`;
+    }
+    let semillas = '';
+    for (let anillo = 1; anillo <= 3; anillo++) {
+      const radio = anillo * 4.2;
+      const cantidad = anillo * 6;
+      for (let s = 0; s < cantidad; s++) {
+        const a = (s / cantidad) * 2 * Math.PI + anillo;
+        const cx = (radio * Math.cos(a)).toFixed(1);
+        const cy = (radio * Math.sin(a)).toFixed(1);
+        semillas += `<circle cx="${cx}" cy="${cy}" r="1" fill="#4a2f14"/>`;
+      }
+    }
+    return `
+        <path d="M -14 6 C -18 12 -14 18 0 18 C 14 18 18 12 14 6
+                 C 8 12 -8 12 -14 6 Z" fill="#2f8f3e"/>
+        ${petalos}
+        <circle cx="0" cy="0" r="14" fill="#6b4423"/>
+        <circle cx="0" cy="0" r="14" fill="none" stroke="#4a2f14" stroke-width="1"/>
+        ${semillas}`;
+  }
+
+  // Cabeza de rosa amarilla: capas de petalos redondeados tipo capullo
+  function cabezaRosa(){
+    return `
+        <path d="M -18 8 C -25 18 -20 28 0 30 C 20 28 25 18 18 8
+                 C 10 18 -10 18 -18 8 Z" fill="#2f8f3e"/>
+        <path d="M 0 -8 C 20 -13 28 5 15 18 C 5 25 -5 25 -15 18 C -28 5 -20 -13 0 -8 Z"
+              fill="#f4c400" stroke="#d9a600" stroke-width="0.6"/>
+        <path d="M -16 3 C -22 -10 -12 -23 -1 -18 C -10 -13 -15 -5 -16 3 Z"
+              fill="#f7cf2b" stroke="#d9a600" stroke-width="0.5"/>
+        <path d="M 16 3 C 22 -10 12 -23 1 -18 C 10 -13 15 -5 16 3 Z"
+              fill="#f7cf2b" stroke="#d9a600" stroke-width="0.5"/>
+        <path d="M 0 -5 C 14 -9 19 4 10 13 C 4 18 -4 18 -10 13 C -19 4 -14 -9 0 -5 Z"
+              fill="#ffdd33" stroke="#e8b400" stroke-width="0.5"/>
+        <path d="M -11 1 C -15 -8 -8 -15 0 -13 C -6 -9 -10 -4 -11 1 Z" fill="#ffe14d"/>
+        <path d="M 11 1 C 15 -8 8 -15 0 -13 C 6 -9 10 -4 11 1 Z" fill="#ffe14d"/>
+        <path d="M 0 -4 C 8 -6 10 1 5 8 C 1 10 -1 10 -5 8 C -10 1 -8 -6 0 -4 Z" fill="#ffe97a"/>
+        <path d="M 0 -2 C 4 -4 5 0 3 4 C 0 5 -3 4 -3 1 C -3 -1 -1 -2 0 -2 Z" fill="#fff3b0"/>`;
+  }
+
+  // Cabeza de gerbera: petalos anchos y redondeados en la punta, centro amarillo con textura
+  function cabezaGerbera(){
+    const numPetalos = 14;
+    let petalos = '';
+    for (let p = 0; p < numPetalos; p++) {
+      const angulo = p * (360 / numPetalos);
+      petalos += `<ellipse cx="0" cy="-30" rx="6.5" ry="20"
+                        fill="${p % 2 === 0 ? '#ffdd33' : '#ffcc00'}"
+                        stroke="#e8a800" stroke-width="0.6"
+                        transform="rotate(${angulo})"/>`;
+    }
+    let textura = '';
+    for (let anillo = 1; anillo <= 2; anillo++) {
+      const radio = anillo * 4.2;
+      const cantidad = anillo * 7;
+      for (let s = 0; s < cantidad; s++) {
+        const a = (s / cantidad) * 2 * Math.PI + anillo;
+        const cx = (radio * Math.cos(a)).toFixed(1);
+        const cy = (radio * Math.sin(a)).toFixed(1);
+        textura += `<circle cx="${cx}" cy="${cy}" r="1" fill="#c98a1a"/>`;
+      }
+    }
+    return `
+        <path d="M -14 6 C -18 12 -14 18 0 18 C 14 18 18 12 14 6
+                 C 8 12 -8 12 -14 6 Z" fill="#2f8f3e"/>
+        ${petalos}
+        <circle cx="0" cy="0" r="11" fill="#f4a300"/>
+        ${textura}`;
+  }
+
+  // Arma el SVG completo de una flor según el tipo pedido
+  function crearFlorSVG(tipo, altoTallo){
+    const anchoFlor = 60;
+    const altoTotal = altoTallo + 90;
+    const cuerpo = crearTalloYHojas(anchoFlor, altoTallo, altoTotal);
+    const cabeza = tipo === 'girasol' ? cabezaGirasol()
+                 : tipo === 'rosa'    ? cabezaRosa()
+                 :                      cabezaGerbera();
+
+    return `
+    <svg width="${anchoFlor}" height="${altoTotal}" viewBox="0 0 ${anchoFlor} ${altoTotal}" style="overflow:visible;">
+      <rect x="-45" y="0" width="${anchoFlor + 90}" height="${altoTotal}" fill="transparent"/>
+      ${cuerpo}
+      <g transform="translate(${anchoFlor/2}, ${altoTotal - altoTallo}) scale(1.8)">
+        ${cabeza}
+      </g>
+    </svg>`;
+  }
+
+  // 3 girasoles + 3 rosas + 3 gerberas, mezcladas en orden aleatorio
+  let tiposDeFlor = ['girasol', 'girasol', 'girasol',
+                      'rosa', 'rosa', 'rosa',
+                      'gerbera', 'gerbera', 'gerbera'];
+  // Barajar (Fisher-Yates)
+  for (let i = tiposDeFlor.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [tiposDeFlor[i], tiposDeFlor[j]] = [tiposDeFlor[j], tiposDeFlor[i]];
+  }
+
+  const mensajesEspeciales = ['¡Me encantas, Karime! 💛', '¡Eres Alguien Muy Especial! 🌸🌟', 'Gracias Por Ser Tú 💕', '¡Karime! 💕'];
+  const mensajeFlorEspecial = '✨ Esta Es Tu Flor Favorita, Elegida Solo Para Ti ✨';
+  // Un color de corazón distinto para cada flor, en el orden en que las va tocando
+  const paletaCorazonesInsignia = ['❤️', '🧡', '💛', '💚', '💙', '💜', '🤎', '🖤', '🩷'];
+
+  // Juego: cuántas flores distintas ha tocado ya (se recuerda con localStorage)
+  let floresTocadas = new Set(JSON.parse(localStorage.getItem('floresTocadas') || '[]'));
+  const contadorFlores = document.getElementById('contadorFlores');
+  const totalFlores = tiposDeFlor.length;
+  let florMisteriosaCreada = false;
+
+  // Si ya había entrado antes a esta pantalla, se le agrega un detalle a la carta
+  const yaVisitoPrincipalAntes = localStorage.getItem('principalVisitada') === 'true';
+  localStorage.setItem('principalVisitada', 'true');
+  if (yaVisitoPrincipalAntes) {
+    const parrafoRegreso = document.getElementById('parrafoRegreso');
+    if (parrafoRegreso) parrafoRegreso.style.display = 'block';
+  }
+
+  // Si la vez anterior ya las había tocado todas, se reinicia el conteo
+  // para que la próxima vez que abra la página pueda volver a jugar desde cero.
+  if (floresTocadas.size >= totalFlores) {
+    floresTocadas = new Set();
+    localStorage.setItem('floresTocadas', JSON.stringify([]));
+  }
+
+  function actualizarContador(){
+    contadorFlores.textContent = `${floresTocadas.size}/${totalFlores} flores tocadas`;
+    if (floresTocadas.size >= totalFlores) {
+      contadorFlores.classList.add('completo');
+      contadorFlores.textContent = '¡TQM Karime❤️, Presiona La Flor Sorpresa! 💕';
+    }
+  }
+  actualizarContador();
+
+  // Se elige al azar cuál de las 9 flores será la "especial"
+  const indiceFlorEspecial = Math.floor(Math.random() * tiposDeFlor.length);
+
+  // En pantallas angostas (celulares) las flores necesitan verse mucho más
+  // grandes en proporción, porque su tamaño base está pensado en píxeles
+  // fijos que en una pantalla alta de celular se ven diminutos.
+  const esPantallaAngosta = window.innerWidth < 640;
+  const escalaBase = esPantallaAngosta ? 1.3 : 0.85;
+  const escalaRango = esPantallaAngosta ? 0.5 : 0.35;
+
+  tiposDeFlor.forEach((tipo, indice) => {
+    const altoTallo = 140 + Math.random() * 90;
+    const escalaFlor = (escalaBase + Math.random() * escalaRango).toFixed(2); // variación de tamaño para dar profundidad
+
+    const contenedor = document.createElement('div');
+    contenedor.className = 'flor-tamano';
+    contenedor.style.transform = `scale(${escalaFlor})`;
+
+    const flor = document.createElement('div');
+    flor.className = 'flor';
+    flor.style.animationDelay = (Math.random() * 2).toFixed(2) + 's';
+    flor.style.animationDuration = (3.5 + Math.random() * 2).toFixed(2) + 's';
+    flor.innerHTML = crearFlorSVG(tipo, altoTallo);
+
+    // Brillo sutil que recorre la flor de vez en cuando
+    const brillo = document.createElement('div');
+    brillo.className = 'brillo-flor';
+    brillo.style.animationDelay = (Math.random() * 5).toFixed(2) + 's';
+    flor.appendChild(brillo);
+
+    // La flor especial brilla distinto y da un mensaje único
+    const esFlorEspecial = indice === indiceFlorEspecial;
+    if (esFlorEspecial) flor.classList.add('flor-especial');
+
+    // Al hacer clic en una flor aparece un mensajito flotante
+    flor.addEventListener('click', () => {
+      // 1) Mostrar el mensaje SIEMPRE primero (esto nunca debe fallar)
+      const msj = document.createElement('div');
+      msj.className = 'mensaje-especial';
+      msj.textContent = esFlorEspecial
+        ? mensajeFlorEspecial
+        : mensajesEspeciales[Math.floor(Math.random() * mensajesEspeciales.length)];
+      const rectFlor = flor.getBoundingClientRect();
+      const rectEscena = escena.getBoundingClientRect();
+      msj.style.left = (rectFlor.left - rectEscena.left + rectFlor.width / 2) + 'px';
+      msj.style.top = (rectFlor.top - rectEscena.top) + 'px';
+      escena.appendChild(msj);
+      setTimeout(() => msj.remove(), 2500);
+      if (esFlorEspecial) lanzarInicialesEspeciales(rectFlor, rectEscena);
+
+      // 2) Registrar la flor como tocada para el juego
+      floresTocadas.add(indice);
+      try { localStorage.setItem('floresTocadas', JSON.stringify([...floresTocadas])); } catch (err) {}
+      actualizarContador();
+
+      if (floresTocadas.size === totalFlores && !florMisteriosaCreada) {
+        florMisteriosaCreada = true;
+        // Vibración tipo "latido" para este momento especial
+        if (navigator.vibrate) { try { navigator.vibrate([90, 70, 90, 70, 220]); } catch (err) {} }
+        setTimeout(() => {
+          crearFlorMisteriosa();
+          reproducirCampanitas();
+          dibujarConstelacion();
+        }, 700);
+        setTimeout(() => {
+          document.getElementById('mensajeFinal2').classList.add('visible');
+        }, 1200);
+      }
+
+      // Insignia visual permanente (mientras esta pantalla siga abierta):
+      // un corazón de color distinto según el orden en que fue tocada
+      if (!flor.querySelector('.insignia-tocada')) {
+        const insignia = document.createElement('span');
+        insignia.className = 'insignia-tocada';
+        const ordenSeleccion = floresTocadas.size - 1; // ya se agregó arriba, así que -1 = su turno
+        insignia.textContent = paletaCorazonesInsignia[ordenSeleccion % paletaCorazonesInsignia.length];
+        flor.appendChild(insignia);
+      }
+
+      // 3) Vibración y sonido son solo un extra: si el navegador los bloquea, no debe afectar nada más
+      try { if (navigator.vibrate) navigator.vibrate(30); } catch (err) {}
+      reproducirTono(1046, 0.5, 0.12);
+    });
+
+    contenedor.appendChild(flor);
+    campo.appendChild(contenedor);
+  });
+
+  // Pequeñas iniciales doradas que flotan al tocar la flor especial
+  function lanzarInicialesEspeciales(rectFlor, rectEscena){
+    const cantidad = 6;
+    for (let i = 0; i < cantidad; i++) {
+      const letra = document.createElement('div');
+      letra.className = 'letra-especial';
+      letra.textContent = 'K';
+      letra.style.left = (rectFlor.left - rectEscena.left + rectFlor.width/2 + (Math.random()*40-20)) + 'px';
+      letra.style.top = (rectFlor.top - rectEscena.top + (Math.random()*20)) + 'px';
+      letra.style.setProperty('--dx', (Math.random()*60-30).toFixed(0) + 'px');
+      letra.style.animationDelay = (Math.random()*0.3).toFixed(2) + 's';
+      escena.appendChild(letra);
+      setTimeout(() => letra.remove(), 2200);
+    }
+  }
+
+  // Lluvia de K's y corazones que cubre toda la pantalla, para el premio final
+  function lanzarLluviaKCorazones(){
+    const contenedor = document.createElement('div');
+    contenedor.className = 'lluvia-contenedor';
+    document.body.appendChild(contenedor);
+
+    const simbolos = ['K', '❤️', '💛', '💕', 'K', '💛', 'K', '❤️', 'K'];
+    const cantidad = 65;
+    for (let i = 0; i < cantidad; i++) {
+      const item = document.createElement('div');
+      item.className = 'lluvia-item';
+      const simbolo = simbolos[Math.floor(Math.random() * simbolos.length)];
+      item.textContent = simbolo;
+      item.style.left = (Math.random() * 96) + 'vw';
+      item.style.animationDuration = (2.2 + Math.random() * 1.6).toFixed(2) + 's';
+      item.style.animationDelay = (Math.random() * 1.1).toFixed(2) + 's';
+      if (simbolo === 'K') {
+        item.style.fontSize = (20 + Math.random() * 16) + 'px';
+        item.style.fontWeight = 'bold';
+        item.style.color = '#ffe14d';
+        item.style.textShadow = '0 0 6px rgba(255,225,77,0.85)';
+      } else {
+        item.style.fontSize = (18 + Math.random() * 14) + 'px';
+      }
+      contenedor.appendChild(item);
+    }
+
+    // Se limpia todo a los 5 segundos, tal como se pidió
+    setTimeout(() => contenedor.remove(), 5000);
+  }
+
+  // --- Easter egg secreto: agitar el celular ---
+  const mensajesSecretos = [
+    '🤫 Encontraste Un Secreto... Te Quiero Y Me Gustas Mucho, Karime 💛',
+    '✨ Shhh, Esto Es Solo Entre Tú Y Yo 💛😍😍'
+  ];
+  let agitarActivado = false;
+  let ultimaAgitacion = 0;
+  let ultAx = null, ultAy = null, ultAz = null;
+
+  function activarSecretoAgitar(){
+    const ahora = Date.now();
+    if (ahora - ultimaAgitacion < 4000) return; // evita que se dispare varias veces seguidas
+    ultimaAgitacion = ahora;
+
+    // Vibración tipo "latido", igual que en los otros momentos especiales
+    if (navigator.vibrate) { try { navigator.vibrate([90, 70, 90, 70, 220]); } catch (err) {} }
+    reproducirTono(784, 0.3, 0.12);
+    reproducirTono(988, 0.35, 0.12, 0.15);
+
+    const secreto = document.createElement('div');
+    secreto.className = 'mensaje-secreto';
+    secreto.textContent = mensajesSecretos[Math.floor(Math.random() * mensajesSecretos.length)];
+    document.body.appendChild(secreto);
+    requestAnimationFrame(() => secreto.classList.add('visible'));
+    setTimeout(() => { secreto.classList.remove('visible'); setTimeout(() => secreto.remove(), 500); }, 2800);
+
+    // Lluvia de girasoles y corazones, distinta a la de la flor sorpresa
+    const contenedor = document.createElement('div');
+    contenedor.className = 'lluvia-contenedor';
+    document.body.appendChild(contenedor);
+    const simbolos = ['🌻', '💛', '✨', '💕'];
+    for (let i = 0; i < 40; i++) {
+      const item = document.createElement('div');
+      item.className = 'lluvia-item';
+      item.textContent = simbolos[Math.floor(Math.random() * simbolos.length)];
+      item.style.left = (Math.random() * 96) + 'vw';
+      item.style.fontSize = (16 + Math.random() * 16) + 'px';
+      item.style.animationDuration = (2 + Math.random() * 1.5).toFixed(2) + 's';
+      item.style.animationDelay = (Math.random() * 0.8).toFixed(2) + 's';
+      contenedor.appendChild(item);
+    }
+    setTimeout(() => contenedor.remove(), 4500);
+  }
+
+  function manejarMovimientoCelular(evento){
+    // Algunos dispositivos solo entregan "acceleration" (sin gravedad) en vez
+    // de "accelerationIncludingGravity"; se usa cualquiera de las dos que exista.
+    const acc = evento.accelerationIncludingGravity || evento.acceleration;
+    if (!acc || acc.x === null || acc.x === undefined) return;
+    const { x, y, z } = acc;
+    if (ultAx !== null) {
+      const delta = Math.abs(x - ultAx) + Math.abs(y - ultAy) + Math.abs(z - ultAz);
+      if (delta > 22) activarSecretoAgitar();
+    }
+    ultAx = x; ultAy = y; ultAz = z;
+  }
+
+  function iniciarDeteccionAgitar(){
+    if (agitarActivado) return;
+    agitarActivado = true;
+    window.addEventListener('devicemotion', manejarMovimientoCelular);
+  }
+
+  // En iPhone (iOS 13+) hay que pedir permiso explícito para leer el sensor
+  // de movimiento, y solo se puede pedir a partir de un gesto del usuario.
+  // Importante: en varios iOS este permiso solo se concede de forma confiable
+  // si se solicita dentro de un evento "click" (no "pointerdown"/"touchstart").
+  function solicitarPermisoMovimiento(){
+    if (typeof DeviceMotionEvent !== 'undefined' && typeof DeviceMotionEvent.requestPermission === 'function') {
+      DeviceMotionEvent.requestPermission().then(estado => {
+        if (estado === 'granted') iniciarDeteccionAgitar();
+      }).catch(() => {});
+    } else if (typeof DeviceMotionEvent !== 'undefined') {
+      iniciarDeteccionAgitar();
+    }
+  }
+  document.addEventListener('click', solicitarPermisoMovimiento, { once: true });
+
+  // --- Inclinar el celular mueve levemente la luna y las estrellas (parallax) ---
+  // Mismo efecto que ya existe en la portada, aplicado aquí solo al cielo
+  // (fondoCielo), para no mover botones ni las flores del jardín.
+  // Se omite por completo si la persona tiene activado "reducir movimiento".
+  const prefiereMenosMovimientoJardin = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function aplicarInclinacionCieloJardin(evento){
+    const gamma = evento.gamma || 0; // izquierda-derecha
+    const beta = evento.beta || 0;   // adelante-atrás
+    const despX = Math.max(-14, Math.min(14, gamma * 0.35));
+    const despY = Math.max(-10, Math.min(10, (beta - 45) * 0.15));
+    fondoCielo.style.transform = `translate(${despX.toFixed(1)}px, ${despY.toFixed(1)}px)`;
+  }
+  function solicitarPermisoOrientacionJardin(){
+    if (prefiereMenosMovimientoJardin) return;
+    if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+      DeviceOrientationEvent.requestPermission().then(estado => {
+        if (estado === 'granted') window.addEventListener('deviceorientation', aplicarInclinacionCieloJardin);
+      }).catch(() => {});
+    } else if (typeof DeviceOrientationEvent !== 'undefined') {
+      window.addEventListener('deviceorientation', aplicarInclinacionCieloJardin);
+    }
+  }
+  document.addEventListener('pointerdown', solicitarPermisoOrientacionJardin, { once: true });
+
+  // Respaldo manual: tocar la luna 3 veces seguidas activa el mismo secreto,
+  // por si el sensor de movimiento no está disponible o el permiso fue negado.
+  const lunaEl = document.querySelector('.luna');
+  if (lunaEl) {
+    lunaEl.style.pointerEvents = 'auto';
+    lunaEl.style.cursor = 'pointer';
+    let toquesLuna = 0;
+    let temporizadorToquesLuna = null;
+    lunaEl.addEventListener('click', () => {
+      toquesLuna++;
+      clearTimeout(temporizadorToquesLuna);
+      temporizadorToquesLuna = setTimeout(() => { toquesLuna = 0; }, 1500);
+      if (toquesLuna >= 3) {
+        toquesLuna = 0;
+        activarSecretoAgitar();
+      }
+    });
+  }
+
+  // Pequeño acorde ascendente de campanitas, para el momento en que se completan las 9 flores
+  function reproducirCampanitas(){
+    const notas = [523.25, 659.25, 783.99, 1046.5];
+    notas.forEach((freq, i) => reproducirTono(freq, 0.5, 0.15, i * 0.15));
+  }
+
+  // Constelación sorpresa: conecta puntos de luz formando un corazón en el
+  // cielo, con las iniciales de ambos apareciendo al centro. Se dibuja una
+  // sola vez, al completar las 9 flores del jardín.
+  function dibujarConstelacion(){
+    const svgNS = 'http://www.w3.org/2000/svg';
+    const anchoVista = 200, altoVista = 190;
+    const centroX = anchoVista / 2, centroY = altoVista / 2 + 6;
+    const escala = 5.4;
+    const cantidadPuntos = 22;
+
+    // Curva paramétrica del corazón (misma fórmula usada en el resto del sitio)
+    const puntos = [];
+    for (let i = 0; i < cantidadPuntos; i++) {
+      const t = (i / cantidadPuntos) * Math.PI * 2;
+      const x = 16 * Math.pow(Math.sin(t), 3);
+      const y = 13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t);
+      puntos.push({ x: centroX + x * escala, y: centroY - y * escala });
+    }
+
+    const svg = document.createElementNS(svgNS, 'svg');
+    svg.setAttribute('viewBox', `0 0 ${anchoVista} ${altoVista}`);
+    svg.style.width = '100%';
+    svg.style.display = 'block';
+    svg.style.overflow = 'visible';
+
+    // Un solo trazo cerrado que conecta todos los puntos, estilo constelación
+    let d = `M ${puntos[0].x.toFixed(1)} ${puntos[0].y.toFixed(1)} `;
+    for (let i = 1; i < puntos.length; i++) {
+      d += `L ${puntos[i].x.toFixed(1)} ${puntos[i].y.toFixed(1)} `;
+    }
+    d += 'Z';
+
+    const linea = document.createElementNS(svgNS, 'path');
+    linea.setAttribute('d', d);
+    linea.setAttribute('class', 'constelacion-linea');
+    linea.style.transition = 'stroke-dashoffset 2.6s ease-in-out';
+    svg.appendChild(linea);
+
+    puntos.forEach((p, i) => {
+      const punto = document.createElementNS(svgNS, 'circle');
+      punto.setAttribute('cx', p.x.toFixed(1));
+      punto.setAttribute('cy', p.y.toFixed(1));
+      punto.setAttribute('r', i % 3 === 0 ? 2.6 : 1.5);
+      punto.setAttribute('fill', '#fff6d8');
+      punto.setAttribute('class', 'constelacion-punto');
+      punto.style.animationDelay = ((i / puntos.length) * 2.4).toFixed(2) + 's';
+      punto.style.filter = 'drop-shadow(0 0 3px rgba(255,241,181,0.9))';
+      svg.appendChild(punto);
+    });
+
+    const texto = document.createElementNS(svgNS, 'text');
+    texto.setAttribute('x', centroX);
+    texto.setAttribute('y', centroY + 3);
+    texto.setAttribute('text-anchor', 'middle');
+    texto.setAttribute('class', 'constelacion-texto');
+    texto.setAttribute('fill', '#ffe14d');
+    texto.setAttribute('font-size', '13');
+    texto.style.filter = 'drop-shadow(0 0 5px rgba(255,225,77,0.9))';
+    texto.textContent = 'J ♥ K';
+    svg.appendChild(texto);
+
+    const contenedor = document.createElement('div');
+    contenedor.className = 'constelacion-contenedor';
+    contenedor.appendChild(svg);
+    document.body.appendChild(contenedor);
+
+    // Efecto de "trazo": la línea arranca oculta y se va dibujando sola
+    const longitud = linea.getTotalLength();
+    linea.style.strokeDasharray = longitud;
+    linea.style.strokeDashoffset = longitud;
+
+    requestAnimationFrame(() => {
+      contenedor.classList.add('visible');
+      requestAnimationFrame(() => { linea.style.strokeDashoffset = '0'; });
+    });
+
+    setTimeout(() => {
+      texto.classList.add('visible');
+      reproducirTono(1318.5, 0.4, 0.1);
+    }, 2600);
+
+    // Se desvanece sola después de unos segundos, sin estorbar la flor sorpresa
+    setTimeout(() => {
+      contenedor.classList.add('saliendo');
+      setTimeout(() => contenedor.remove(), 1500);
+    }, 8000);
+  }
+
+  // Flor extra que aparece solo al completar las 9 flores del jardín, como premio
+  function crearFlorMisteriosa(){
+    const contenedor = document.createElement('div');
+    contenedor.className = 'flor-misteriosa';
+
+    const flor = document.createElement('div');
+    flor.className = 'flor';
+    flor.style.animationDuration = '5s';
+    flor.innerHTML = crearFlorSVG('girasol', 150);
+    contenedor.appendChild(flor);
+
+    escena.appendChild(contenedor);
+    requestAnimationFrame(() => contenedor.classList.add('visible'));
+
+    let yaMostroMensaje = false;
+    flor.addEventListener('click', () => {
+      // Mismo mecanismo que ya funciona bien con las otras 9 flores,
+      // pero anidado dentro del contenedor para que quede siempre por encima
+      const msj = document.createElement('div');
+      msj.className = 'mensaje-especial';
+      msj.textContent = yaMostroMensaje
+        ? '🌻 Gracias Por Llegar Hasta Aquí, Presiona Otra Vez, Y Abre La Carta 💛'
+        : 'Esta Flor Sorpresa... La Hice Pensando En Ti, Abre La Carta💛';
+      yaMostroMensaje = true;
+      const rectFlor = flor.getBoundingClientRect();
+      const rectContenedor = contenedor.getBoundingClientRect();
+      const rectEscena = escena.getBoundingClientRect();
+      msj.style.left = (rectFlor.left - rectContenedor.left + rectFlor.width / 2) + 'px';
+      msj.style.top = (rectFlor.top - rectContenedor.top) + 'px';
+      contenedor.appendChild(msj);
+      lanzarInicialesEspeciales(rectFlor, rectEscena);
+      lanzarLluviaKCorazones();
+      setTimeout(() => msj.remove(), 2500);
+      if (navigator.vibrate) { try { navigator.vibrate(30); } catch (err) {} }
+    });
+  }
+
+  // Corazones flotantes
+  const emojisCorazon = ['❤️','💛','💕'];
+  function lanzarCorazon(){
+    const c = document.createElement('div');
+    c.className = 'corazon';
+    c.textContent = emojisCorazon[Math.floor(Math.random()*emojisCorazon.length)];
+    c.style.left = (5 + Math.random() * 90) + '%';
+    c.style.animationDuration = (5 + Math.random() * 3).toFixed(2) + 's';
+    escena.appendChild(c);
+    setTimeout(() => c.remove(), 9000);
+  }
+  setInterval(lanzarCorazon, 700);
+
+  // Control de música: se intenta reproducir sola al cargar, directo al volumen máximo.
+  // Si el navegador bloquea el autoplay con sonido, el botón sirve de respaldo.
+  const cancion = document.getElementById('cancion');
+  const botonMusica = document.getElementById('botonMusica');
+  const volumenCancion = document.getElementById('volumenCancion');
+  const tiempoCancion = document.getElementById('tiempoCancion');
+  // Continuidad de música: si viene de index.html, seguimos desde el mismo
+  // segundo y volumen en vez de reiniciar la canción desde cero.
+  let tiempoMusicaGuardado = null;
+  let volumenMusicaGuardado = null;
+  try {
+    const t = localStorage.getItem('musicaTiempo');
+    const v = localStorage.getItem('musicaVolumen');
+    if (t !== null) tiempoMusicaGuardado = parseFloat(t);
+    if (v !== null) volumenMusicaGuardado = parseFloat(v);
+    localStorage.removeItem('musicaTiempo');
+    localStorage.removeItem('musicaVolumen');
+  } catch (err) {}
+
+  cancion.volume = (volumenMusicaGuardado !== null && !isNaN(volumenMusicaGuardado))
+    ? volumenMusicaGuardado
+    : 1;
+  volumenCancion.value = cancion.volume;
+
+  if (tiempoMusicaGuardado !== null && !isNaN(tiempoMusicaGuardado)) {
+    const continuarDondeIba = () => {
+      try { cancion.currentTime = tiempoMusicaGuardado; } catch (err) {}
+    };
+    if (cancion.readyState >= 1) continuarDondeIba();
+    else cancion.addEventListener('loadedmetadata', continuarDondeIba, { once: true });
+  }
+
+  function actualizarBoton(){
+    botonMusica.textContent = cancion.paused ? '🔇' : '🔊';
+  }
+
+  function formatoTiempo(segundos){
+    if (!isFinite(segundos)) return '0:00';
+    const m = Math.floor(segundos / 60);
+    const s = Math.floor(segundos % 60).toString().padStart(2, '0');
+    return `${m}:${s}`;
+  }
+  cancion.addEventListener('timeupdate', () => {
+    tiempoCancion.textContent = `${formatoTiempo(cancion.currentTime)} / ${formatoTiempo(cancion.duration)}`;
+  });
+
+  volumenCancion.addEventListener('input', () => {
+    cancion.volume = parseFloat(volumenCancion.value);
+  });
+
+  window.addEventListener('load', () => {
+    cancion.play()
+      .then(() => { actualizarBoton(); })
+      .catch(() => { actualizarBoton(); });
+  });
+
+  botonMusica.addEventListener('click', () => {
+    if (cancion.paused) { cancion.play(); } else { cancion.pause(); }
+    actualizarBoton();
+  });
+
+  // --- Botón de compartir ---
+  // Se cuenta cada vez que lo presiona (intento), y por separado cuando el
+  // sistema confirma que sí llegó a compartirlo (solo es posible saber esto
+  // con certeza cuando el celular usa el menú nativo de compartir; si cae al
+  // respaldo de WhatsApp, solo sabemos que lo abrió, no si al final lo envió).
+  document.getElementById('botonCompartir').addEventListener('click', () => {
+    fetch('https://countapi.mileshilliard.com/api/v1/hit/flores-karime-jm-2026-compartir-intento').catch(() => {});
+
+    // Siempre se comparte la portada (index.html), sin importar que este botón
+    // esté aquí en el jardín — así quien reciba el link ve primero la sorpresa
+    // desde el inicio, en vez de caer directo al jardín ya abierto.
+    let enlace;
+    try {
+      enlace = new URL('index.html', window.location.href).href;
+    } catch (err) {
+      enlace = window.location.href; // respaldo, por si algo raro pasa con la URL
+    }
+    const texto = '¡Te Dejé Una Sorpresa Con Flores Amarillas! 🌻💛';
+    if (navigator.share) {
+      navigator.share({ title: 'Flores Amarillas', text: texto, url: enlace })
+        .then(() => {
+          fetch('https://countapi.mileshilliard.com/api/v1/hit/flores-karime-jm-2026-compartir-confirmado').catch(() => {});
+        })
+        .catch(() => {}); // canceló el menú de compartir, no se cuenta como confirmado
+    } else {
+      const urlWhatsapp = 'https://wa.me/?text=' + encodeURIComponent(texto + ' ' + enlace);
+      window.open(urlWhatsapp, '_blank');
+    }
+  });
+
+  // --- Sobre con carta ---
+  const zonaSobre = document.getElementById('zonaSobre');
+  const cartaOverlay = document.getElementById('cartaOverlay');
+  const cerrarCarta = document.getElementById('cerrarCarta');
+
+  // El sobre va flotando a distintas posiciones de la pantalla cada pocos segundos
+  function moverSobreAZonaAleatoria(){
+    const anchoSobre = zonaSobre.offsetWidth || 76;
+    const altoSobre = zonaSobre.offsetHeight || 56;
+    const margen = 20;
+    const maxX = window.innerWidth - anchoSobre - margen;
+    const maxY = window.innerHeight - altoSobre - margen;
+    const nuevaX = margen + Math.random() * Math.max(0, maxX - margen);
+    // Se evita la franja superior donde están el contador y los botones
+    const minY = window.innerHeight * 0.18;
+    const nuevaY = minY + Math.random() * Math.max(0, maxY - minY);
+    zonaSobre.style.left = nuevaX + 'px';
+    zonaSobre.style.top = nuevaY + 'px';
+    zonaSobre.style.right = 'auto';
+    zonaSobre.style.bottom = 'auto';
+  }
+  moverSobreAZonaAleatoria();
+  setInterval(() => {
+    if (!cartaOverlay.classList.contains('visible')) moverSobreAZonaAleatoria();
+  }, 5500);
+
+  zonaSobre.addEventListener('click', () => {
+    zonaSobre.classList.add('abierto');
+    zonaSobre.classList.remove('llamando-atencion');
+    // Vibración tipo "latido" (tump-tump), en vez de un solo pulso
+    if (navigator.vibrate) { try { navigator.vibrate([90, 70, 90, 70, 220]); } catch (err) {} }
+    setTimeout(() => {
+      cartaOverlay.classList.add('visible');
+      lanzarDestellosCorazonesCarta();
+    }, 500);
+  });
+
+  // Ráfaga de corazones que salen disparados desde el centro al abrir la carta
+  const emojisDestelloCarta = ['❤️','💛','💕','💖','✨'];
+  function lanzarDestellosCorazonesCarta(){
+    const cantidad = 40;
+    for (let i = 0; i < cantidad; i++) {
+      const corazon = document.createElement('div');
+      corazon.className = 'destello-corazon-carta';
+      corazon.textContent = emojisDestelloCarta[Math.floor(Math.random() * emojisDestelloCarta.length)];
+      const angulo = Math.random() * Math.PI * 2;
+      const distancia = 90 + Math.random() * 160;
+      corazon.style.setProperty('--dx', (Math.cos(angulo) * distancia).toFixed(0) + 'px');
+      corazon.style.setProperty('--dy', (Math.sin(angulo) * distancia).toFixed(0) + 'px');
+      corazon.style.animationDelay = (Math.random() * 0.2).toFixed(2) + 's';
+      document.body.appendChild(corazon);
+      setTimeout(() => corazon.remove(), 1600);
+    }
+  }
+
+  // Confeti festivo que sale disparado desde cualquier botón (usado en las respuestas "Sí")
+  const coloresConfetti = ['#ffe14d', '#fff6d8', '#ffb6c1', '#ffffff', '#ffb84d'];
+  const emojisConfetti = ['✨', '💛', '❤️'];
+  function lanzarConfettiBoton(boton){
+    const rect = boton.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    const cantidad = 24;
+    for (let i = 0; i < cantidad; i++) {
+      const pieza = document.createElement('div');
+      pieza.className = 'confetti-pieza';
+      const esEmoji = Math.random() < 0.3;
+      if (esEmoji) {
+        pieza.textContent = emojisConfetti[Math.floor(Math.random() * emojisConfetti.length)];
+        pieza.style.fontSize = (12 + Math.random() * 8) + 'px';
+        pieza.style.width = 'auto';
+        pieza.style.height = 'auto';
+      } else {
+        pieza.style.background = coloresConfetti[Math.floor(Math.random() * coloresConfetti.length)];
+        pieza.style.width = (5 + Math.random() * 5) + 'px';
+        pieza.style.height = (5 + Math.random() * 5) + 'px';
+        pieza.style.borderRadius = Math.random() < 0.5 ? '50%' : '2px';
+      }
+      const angulo = Math.random() * Math.PI * 2;
+      const distancia = 70 + Math.random() * 150;
+      pieza.style.left = cx + 'px';
+      pieza.style.top = cy + 'px';
+      pieza.style.setProperty('--dx', (Math.cos(angulo) * distancia).toFixed(0) + 'px');
+      // Se sesga un poco hacia arriba para que se sienta como una celebración, no solo una explosión
+      pieza.style.setProperty('--dy', (Math.sin(angulo) * distancia - 45).toFixed(0) + 'px');
+      pieza.style.setProperty('--rot', (Math.random() * 720 - 360).toFixed(0) + 'deg');
+      pieza.style.animationDelay = (Math.random() * 0.15).toFixed(2) + 's';
+      document.body.appendChild(pieza);
+      setTimeout(() => pieza.remove(), 1750);
+    }
+  }
+
+  // Si después de 40 segundos no ha abierto el sobre, empieza a brillar más para llamar la atención
+  setTimeout(() => {
+    if (!zonaSobre.classList.contains('abierto')) {
+      zonaSobre.classList.add('llamando-atencion');
+    }
+  }, 40000);
+
+  function cerrarLaCarta(){
+    cartaOverlay.classList.remove('visible');
+    setTimeout(() => { zonaSobre.classList.remove('abierto'); }, 400);
+  }
+  cerrarCarta.addEventListener('click', cerrarLaCarta);
+  cartaOverlay.addEventListener('click', (evento) => {
+    if (evento.target === cartaOverlay) cerrarLaCarta();
+  });
+
+  // --- Juego: botón "No" que se escapa ---
+  const zonaBotonesSiNo = document.getElementById('zonaBotonesSiNo');
+  const botonNo = document.getElementById('botonNo');
+  const botonSi = document.getElementById('botonSi');
+  const respuestaSiNo = document.getElementById('respuestaSiNo');
+
+  function escaparBotonNo(){
+    const anchoZona = zonaBotonesSiNo.offsetWidth;
+    const altoZona = zonaBotonesSiNo.offsetHeight;
+    const anchoBoton = botonNo.offsetWidth;
+    const altoBoton = botonNo.offsetHeight;
+    const nuevoLeft = Math.random() * Math.max(0, anchoZona - anchoBoton);
+    const nuevoTop = Math.random() * Math.max(0, altoZona - altoBoton);
+    botonNo.style.left = nuevoLeft + 'px';
+    botonNo.style.top = nuevoTop + 'px';
+  }
+  // En computadora se escapa al acercar el cursor; en celular, al intentar tocarlo
+  botonNo.addEventListener('mouseenter', escaparBotonNo);
+  botonNo.addEventListener('touchstart', (evento) => {
+    evento.preventDefault();
+    escaparBotonNo();
+  }, { passive: false });
+
+  botonSi.addEventListener('click', () => {
+    respuestaSiNo.classList.add('visible');
+    lanzarConfettiBoton(botonSi);
+    reproducirTono(1318, 0.35, 0.1);
+    if (navigator.vibrate) { try { navigator.vibrate(20); } catch (err) {} }
+    setTimeout(() => { juegoCafe.classList.add('visible'); }, 1200);
+  });
+
+  // --- Segunda pregunta, más ligera: el café ---
+  const juegoCafe = document.getElementById('juegoCafe');
+  const zonaBotonesCafe = document.getElementById('zonaBotonesCafe');
+  const botonNoCafe = document.getElementById('botonNoCafe');
+  const botonSiCafe = document.getElementById('botonSiCafe');
+  const respuestaCafe = document.getElementById('respuestaCafe');
+
+  function escaparBotonCafe(){
+    const anchoZona = zonaBotonesCafe.offsetWidth;
+    const altoZona = zonaBotonesCafe.offsetHeight;
+    const anchoBoton = botonNoCafe.offsetWidth;
+    const altoBoton = botonNoCafe.offsetHeight;
+    const nuevoLeft = Math.random() * Math.max(0, anchoZona - anchoBoton);
+    const nuevoTop = Math.random() * Math.max(0, altoZona - altoBoton);
+    botonNoCafe.style.left = nuevoLeft + 'px';
+    botonNoCafe.style.top = nuevoTop + 'px';
+  }
+  botonNoCafe.addEventListener('mouseenter', escaparBotonCafe);
+  botonNoCafe.addEventListener('touchstart', (evento) => {
+    evento.preventDefault();
+    escaparBotonCafe();
+  }, { passive: false });
+
+  botonSiCafe.addEventListener('click', () => {
+    respuestaCafe.classList.add('visible');
+    lanzarConfettiBoton(botonSiCafe);
+    reproducirTono(1318, 0.35, 0.1);
+    if (navigator.vibrate) { try { navigator.vibrate(20); } catch (err) {} }
+  });
+
+  // Remate final: cae la noche y se queda un mensaje fijo
+  function activarNoche(){
+    document.documentElement.classList.add('noche');
+    document.body.classList.add('noche');
+    document.getElementById('mensajeFinal').classList.add('visible');
+    document.getElementById('botonVolverNoche').classList.add('visible');
+    document.getElementById('botonGuardarRecuerdo').classList.add('visible');
+
+    // Si ya había completado las 9 flores antes de que cayera la noche
+    // (o se está repitiendo el ciclo), nos aseguramos de que el segundo
+    // mensaje también quede visible.
+    if (floresTocadas.size >= totalFlores) {
+      setTimeout(() => {
+        document.getElementById('mensajeFinal2').classList.add('visible');
+      }, 3000);
+    }
+  }
+
+  // La noche cae sola a los 6 segundos de haber entrado al jardín
+  setTimeout(activarNoche, 6000);
+
+  // Botón para repetir la experiencia sin recargar la página
+  document.getElementById('botonVolverNoche').addEventListener('click', () => {
+    document.documentElement.classList.remove('noche');
+    document.body.classList.remove('noche');
+    document.getElementById('mensajeFinal').classList.remove('visible');
+    document.getElementById('mensajeFinal2').classList.remove('visible');
+    document.getElementById('botonVolverNoche').classList.remove('visible');
+    document.getElementById('botonGuardarRecuerdo').classList.remove('visible');
+    // Se vuelve a activar el ciclo para quien quiera repetirlo
+    setTimeout(activarNoche, 6000);
+  });
+
+  // --- Guardar recuerdo: genera una tarjeta con el mensaje final y la descarga como imagen ---
+  function ajustarTextoEnCanvas(contexto, texto, x, y, anchoMaximo, alturaLinea){
+    const palabras = texto.split(' ');
+    let linea = '';
+    const lineas = [];
+    for (let n = 0; n < palabras.length; n++) {
+      const lineaPrueba = linea + palabras[n] + ' ';
+      if (contexto.measureText(lineaPrueba).width > anchoMaximo && n > 0) {
+        lineas.push(linea.trim());
+        linea = palabras[n] + ' ';
+      } else {
+        linea = lineaPrueba;
+      }
+    }
+    lineas.push(linea.trim());
+    const inicioY = y - ((lineas.length - 1) * alturaLinea) / 2;
+    lineas.forEach((l, i) => contexto.fillText(l, x, inicioY + i * alturaLinea));
+  }
+
+  function generarTarjetaRecuerdo(){
+    const canvas = document.createElement('canvas');
+    canvas.width = 600;
+    canvas.height = 800;
+    const ctx = canvas.getContext('2d');
+
+    const gradiente = ctx.createRadialGradient(300, 0, 60, 300, 420, 520);
+    gradiente.addColorStop(0, '#16213a');
+    gradiente.addColorStop(1, '#0a0e1a');
+    ctx.fillStyle = gradiente;
+    ctx.fillRect(0, 0, 600, 800);
+
+    ctx.fillStyle = '#ffffff';
+    for (let i = 0; i < 70; i++) {
+      ctx.globalAlpha = Math.random() * 0.7 + 0.2;
+      ctx.beginPath();
+      ctx.arc(Math.random() * 600, Math.random() * 550, Math.random() * 1.4, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+
+    ctx.textAlign = 'center';
+    ctx.fillStyle = '#ffe14d';
+    ctx.font = '64px serif';
+    ctx.fillText('🌻💛🌙', 300, 320);
+
+    ctx.font = 'italic 34px Georgia, serif';
+    ctx.fillText('Flores Amarillas Para Karime', 300, 400);
+
+    ctx.font = '24px Georgia, serif';
+    ctx.fillStyle = '#ffe8b0';
+    ajustarTextoEnCanvas(ctx, 'TQM Karime 💕', 300, 460, 480, 34);
+
+    ctx.font = '16px Georgia, serif';
+    ctx.fillStyle = 'rgba(255,225,77,0.6)';
+    ctx.fillText('21 de septiembre', 300, 760);
+
+    const enlace = document.createElement('a');
+    enlace.download = 'recuerdo-flores-amarillas.png';
+    enlace.href = canvas.toDataURL('image/png');
+    enlace.click();
+  }
+
+  document.getElementById('botonGuardarRecuerdo').addEventListener('click', generarTarjetaRecuerdo);
+
+
+
+  // Ocultar la pantalla de carga una vez que todo está listo (con un mínimo
+  // de tiempo visible para que alcance a leerse "Preparando tu sorpresa")
+  setTimeout(() => {
+    document.getElementById('pantallaCarga').classList.add('oculta');
+  }, 5000);
+</script>
+</body>
+</html>
